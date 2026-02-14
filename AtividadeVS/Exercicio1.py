@@ -1,0 +1,13 @@
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: "))
+cidade = input("Digite sua cidade: ")
+profissao = input("Digite sua profissão: ")
+
+print("----- FICHA DO USUARIO -----")
+print( )
+print("Nome: " ,nome)
+print("Idade: " ,idade , "anos")
+print("Cidade: " ,cidade)
+print("Profissão: " ,profissao)
+print( )
+print("---------------------------")
