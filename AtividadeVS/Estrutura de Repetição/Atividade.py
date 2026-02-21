@@ -1,7 +1,7 @@
 lista = []
 
-for contador in range(10):
-    lista.append(input("Digite seu nome"))
+for contador in range(int(input("Digite quantas vezes vai acontecer o Loop: "))):
+    lista.append(float(input("Digite seu número: ")))
 
 print(sum(lista))
 
