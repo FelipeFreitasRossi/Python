@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SecureSystem</title>
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>SecureSystem</span>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Análises</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Usuários</span>
+                </a>
+                <a href="configuracoes.html" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Configurações</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Relatórios</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-calendar"></i>
+                    <span>Agenda</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=667eea&color=fff&size=40" alt="Avatar">
+                    <div>
+                        <span class="user-name" id="sidebarUserName">Admin</span>
+                        <span class="user-role">Administrador</span>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <button class="menu-toggle" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1>Dashboard</h1>
+                </div>
+
+                <div class="header-right">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Pesquisar...">
+                    </div>
+                    
+                    <div class="header-actions">
+                        <button class="notification-btn">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge">3</span>
+                        </button>
+                        <button class="theme-toggle" onclick="toggleTheme()">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Welcome Banner -->
+            <div class="welcome-banner">
+                <div class="banner-content">
+                    <h2>Bem-vindo de volta, <span id="userName">Carregando...</span></h2>
+                    <p>Aqui está o resumo do seu sistema hoje</p>
+                </div>
+                <div class="banner-stats">
+                    <div class="stat">
+                        <span class="stat-label">Último login</span>
+                        <span class="stat-value" id="lastLogin">Hoje 09:30</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Tempo de sessão</span>
+                        <span class="stat-value" id="sessionTime">00:00:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Total Usuários</h3>
+                        <div class="stat-number" id="totalUsers">0</div>
+                        <span class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +12% este mês
+                        </span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Usuários Online</h3>
+                        <div class="stat-number" id="onlineUsers">0</div>
+                        <span class="stat-change">
+                            <i class="fas fa-circle" style="color: #10b981;"></i> Agora
+                        </span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #5ea4e9 0%, #4facfe 100%);">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Acessos Hoje</h3>
+                        <div class="stat-number" id="todayAccess">0</div>
+                        <span class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +5% da meta
+                        </span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Tarefas</h3>
+                        <div class="stat-number">8/12</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 66%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Acessos por Hora</h3>
+                        <select class="chart-filter">
+                            <option>Hoje</option>
+                            <option>Esta semana</option>
+                            <option>Este mês</option>
+                        </select>
+                    </div>
+                    <canvas id="accessChart"></canvas>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Distribuição por Departamento</h3>
+                        <select class="chart-filter">
+                            <option>Porcentagem</option>
+                            <option>Números</option>
+                        </select>
+                    </div>
+                    <canvas id="deptChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Activity & Quick Actions -->
+            <div class="dashboard-grid">
+                <!-- Recent Activity -->
+                <div class="activity-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-history"></i> Atividades Recentes</h3>
+                        <a href="#" class="view-all">Ver todas</a>
+                    </div>
+                    
+                    <div class="activity-list" id="activityList">
+                        <!-- Atividades serão carregadas via JS -->
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-bolt"></i> Ações Rápidas</h3>
+                    </div>
+                    
+                    <div class="actions-grid">
+                        <button class="action-btn" onclick="showModal('novoUsuario')">
+                            <i class="fas fa-user-plus"></i>
+                            <span>Novo Usuário</span>
+                        </button>
+                        <button class="action-btn" onclick="showModal('relatorio')">
+                            <i class="fas fa-file-pdf"></i>
+                            <span>Gerar Relatório</span>
+                        </button>
+                        <button class="action-btn" onclick="showModal('backup')">
+                            <i class="fas fa-database"></i>
+                            <span>Backup</span>
+                        </button>
+                        <button class="action-btn" onclick="showModal('config')">
+                            <i class="fas fa-cog"></i>
+                            <span>Configurar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Users Table -->
+            <div class="table-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-users"></i> Usuários Recentes</h3>
+                    <div class="table-actions">
+                        <input type="text" class="table-search" placeholder="Buscar usuário...">
+                        <button class="export-btn">
+                            <i class="fas fa-download"></i> Exportar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Usuário</th>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Departamento</th>
+                                <th>Status</th>
+                                <th>Último acesso</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Dados serão carregados via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="novoUsuarioModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Novo Usuário</h2>
+                <button class="close-modal" onclick="closeModal('novoUsuario')">&times;</button>
+            </div>
+            <form id="novoUsuarioForm">
+                <!-- Formulário de novo usuário -->
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

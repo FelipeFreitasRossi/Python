@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações - SecureSystem</title>
+    <link rel="stylesheet" href="assets/css/configuracoes.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="settings-container">
+        <!-- Sidebar de Configurações -->
+        <aside class="settings-sidebar">
+            <div class="settings-header">
+                <h2>Configurações</h2>
+                <p>Personalize sua experiência</p>
+            </div>
+
+            <nav class="settings-nav">
+                <a href="#perfil" class="settings-nav-item active" onclick="showSection('perfil')">
+                    <i class="fas fa-user"></i>
+                    <span>Perfil</span>
+                </a>
+                <a href="#conta" class="settings-nav-item" onclick="showSection('conta')">
+                    <i class="fas fa-lock"></i>
+                    <span>Conta e Segurança</span>
+                </a>
+                <a href="#notificacoes" class="settings-nav-item" onclick="showSection('notificacoes')">
+                    <i class="fas fa-bell"></i>
+                    <span>Notificações</span>
+                </a>
+                <a href="#aparecia" class="settings-nav-item" onclick="showSection('aparecia')">
+                    <i class="fas fa-palette"></i>
+                    <span>Aparência</span>
+                </a>
+                <a href="#privacidade" class="settings-nav-item" onclick="showSection('privacidade')">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Privacidade</span>
+                </a>
+                <a href="#sistema" class="settings-nav-item" onclick="showSection('sistema')">
+                    <i class="fas fa-cog"></i>
+                    <span>Sistema</span>
+                </a>
+                <a href="#api" class="settings-nav-item" onclick="showSection('api')">
+                    <i class="fas fa-code"></i>
+                    <span>API e Integrações</span>
+                </a>
+                <a href="#logs" class="settings-nav-item" onclick="showSection('logs')">
+                    <i class="fas fa-history"></i>
+                    <span>Logs e Auditoria</span>
+                </a>
+            </nav>
+
+            <div class="settings-footer">
+                <button class="save-all-btn" onclick="saveAllSettings()">
+                    <i class="fas fa-save"></i>
+                    Salvar todas as alterações
+                </button>
+            </div>
+        </aside>
+
+        <!-- Conteúdo Principal -->
+        <main class="settings-content">
+            <!-- Seção Perfil -->
+            <section id="perfil" class="settings-section active">
+                <div class="section-header">
+                    <h2>Perfil</h2>
+                    <p>Gerencie suas informações pessoais</p>
+                </div>
+
+                <div class="settings-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <img src="https://ui-avatars.com/api/?name=Admin&background=667eea&color=fff&size=100" alt="Avatar" id="profileAvatar">
+                            <button class="change-avatar" onclick="changeAvatar()">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                        </div>
+                        <div class="profile-info">
+                            <h3 id="profileName">Admin</h3>
+                            <p id="profileEmail">admin@sistema.com</p>
+                            <span class="profile-badge">Administrador</span>
+                        </div>
+                    </div>
+
+                    <form id="profileForm" class="settings-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nome">
+                                    <i class="fas fa-user"></i>
+                                    Nome Completo
+                                </label>
+                                <input type="text" id="nome" name="nome" value="Administrador">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">
+                                    <i class="fas fa-envelope"></i>
+                                    E-mail
+                                </label>
+                                <input type="email" id="email" name="email" value="admin@sistema.com">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="telefone">
+                                    <i class="fas fa-phone"></i>
+                                    Telefone
+                                </label>
+                                <input type="tel" id="telefone" name="telefone" value="(11) 99999-9999">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="departamento">
+                                    <i class="fas fa-building"></i>
+                                    Departamento
+                                </label>
+                                <select id="departamento" name="departamento">
+                                    <option value="TI" selected>TI</option>
+                                    <option value="Vendas">Vendas</option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="RH">RH</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bio">
+                                <i class="fas fa-align-left"></i>
+                                Biografia
+                            </label>
+                            <textarea id="bio" name="bio" rows="4">Administrador do sistema com experiência em segurança e desenvolvimento.</textarea>
+                        </div>
+
+                        <button type="submit" class="save-btn">
+                            <i class="fas fa-check"></i>
+                            Salvar alterações
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Seção Conta e Segurança -->
+            <section id="conta" class="settings-section">
+                <div class="section-header">
+                    <h2>Conta e Segurança</h2>
+                    <p>Gerencie sua senha e configurações de segurança</p>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Alterar Senha</h3>
+                    <form id="passwordForm" class="settings-form">
+                        <div class="form-group">
+                            <label for="senha_atual">
+                                <i class="fas fa-lock"></i>
+                                Senha Atual
+                            </label>
+                            <div class="password-input">
+                                <input type="password" id="senha_atual" name="senha_atual">
+                                <i class="fas fa-eye toggle-password" onclick="togglePassword('senha_atual')"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nova_senha">
+                                    <i class="fas fa-lock"></i>
+                                    Nova Senha
+                                </label>
+                                <div class="password-input">
+                                    <input type="password" id="nova_senha" name="nova_senha">
+                                    <i class="fas fa-eye toggle-password" onclick="togglePassword('nova_senha')"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirmar_senha">
+                                    <i class="fas fa-lock"></i>
+                                    Confirmar Nova Senha
+                                </label>
+                                <div class="password-input">
+                                    <input type="password" id="confirmar_senha" name="confirmar_senha">
+                                    <i class="fas fa-eye toggle-password" onclick="togglePassword('confirmar_senha')"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="password-requirements">
+                            <p>A senha deve conter:</p>
+                            <ul>
+                                <li class="requirement" id="req-length">✓ Mínimo 8 caracteres</li>
+                                <li class="requirement" id="req-number">✓ Pelo menos 1 número</li>
+                                <li class="requirement" id="req-uppercase">✓ Pelo menos 1 letra maiúscula</li>
+                                <li class="requirement" id="req-special">✓ Pelo menos 1 caractere especial</li>
+                            </ul>
+                        </div>
+
+                        <button type="submit" class="save-btn">
+                            <i class="fas fa-check"></i>
+                            Alterar senha
+                        </button>
+                    </form>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Autenticação em Dois Fatores (2FA)</h3>
+                    <div class="two-factor">
+                        <div class="two-factor-info">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <h4>Proteção adicional para sua conta</h4>
+                                <p>Adicione uma camada extra de segurança com 2FA</p>
+                            </div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="twoFactor" onchange="toggle2FA(this)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div id="qrCodeSection" style="display: none;">
+                        <h4>Configure seu aplicativo 2FA</h4>
+                        <p>Escaneie o QR Code com Google Authenticator ou similar</p>
+                        <div class="qr-code">
+                            <!-- QR Code será gerado aqui -->
+                            <div class="qr-placeholder">
+                                <i class="fas fa-qrcode"></i>
+                            </div>
+                        </div>
+                        <p class="backup-code">Código de backup: XXXX-XXXX-XXXX-XXXX</p>
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Sessões Ativas</h3>
+                    <div class="sessions-list">
+                        <div class="session-item current">
+                            <div class="session-info">
+                                <i class="fas fa-laptop"></i>
+                                <div>
+                                    <h4>Este dispositivo</h4>
+                                    <p>Chrome • São Paulo • Ativo agora</p>
+                                </div>
+                            </div>
+                            <span class="session-badge">Atual</span>
+                        </div>
+
+                        <div class="session-item">
+                            <div class="session-info">
+                                <i class="fas fa-mobile-alt"></i>
+                                <div>
+                                    <h4>iPhone 13</h4>
+                                    <p>Safari • São Paulo • Há 2 dias</p>
+                                </div>
+                            </div>
+                            <button class="revoke-btn" onclick="revokeSession(this)">Revogar</button>
+                        </div>
+                    </div>
+                    <button class="revoke-all-btn" onclick="revokeAllSessions()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Revogar todas as outras sessões
+                    </button>
+                </div>
+            </section>
+
+            <!-- Seção Notificações -->
+            <section id="notificacoes" class="settings-section">
+                <div class="section-header">
+                    <h2>Notificações</h2>
+                    <p>Configure como deseja receber alertas</p>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Canais de Notificação</h3>
+                    
+                    <div class="notification-option">
+                        <div class="option-info">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>E-mail</h4>
+                                <p>Receba notificações por e-mail</p>
+                            </div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="emailNotifications" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="notification-option">
+                        <div class="option-info">
+                            <i class="fas fa-bell"></i>
+                            <div>
+                                <h4>Notificações Push</h4>
+                                <p>Alertas no navegador</p>
+                            </div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="pushNotifications" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="notification-option">
+                        <div class="option-info">
+                            <i class="fas fa-sms"></i>
+                            <div>
+                                <h4>SMS</h4>
+                                <p>Alertas via mensagem de texto</p>
+                            </div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="smsNotifications">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Tipos de Notificação</h3>
+                    
+                    <div class="notification-types">
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked>
+                            <span>Novos acessos à conta</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked>
+                            <span>Alterações de segurança</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked>
+                            <span>Atualizações do sistema</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked>
+                            <span>Relatórios disponíveis</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox">
+                            <span>Promoções e novidades</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção Aparência -->
+            <section id="aparecia" class="settings-section">
+                <div class="section-header">
+                    <h2>Aparência</h2>
+                    <p>Personalize a aparência do sistema</p>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Tema</h3>
+                    
+                    <div class="theme-options">
+                        <div class="theme-option" onclick="setTheme('light')">
+                            <div class="theme-preview light"></div>
+                            <span>Claro</span>
+                        </div>
+                        <div class="theme-option active" onclick="setTheme('dark')">
+                            <div class="theme-preview dark"></div>
+                            <span>Escuro</span>
+                        </div>
+                        <div class="theme-option" onclick="setTheme('auto')">
+                            <div class="theme-preview auto"></div>
+                            <span>Automático</span>
+                        </div>
+                    </div>
+
+                    <h3>Cor Primária</h3>
+                    <div class="color-options">
+                        <div class="color-option" style="background: #667eea" onclick="setPrimaryColor('#667eea')"></div>
+                        <div class="color-option" style="background: #10b981" onclick="setPrimaryColor('#10b981')"></div>
+                        <div class="color-option" style="background: #f59e0b" onclick="setPrimaryColor('#f59e0b')"></div>
+                        <div class="color-option" style="background: #ef4444" onclick="setPrimaryColor('#ef4444')"></div>
+                        <div class="color-option" style="background: #8b5cf6" onclick="setPrimaryColor('#8b5cf6')"></div>
+                    </div>
+
+                    <h3>Idioma</h3>
+                    <select class="language-select">
+                        <option value="pt-BR" selected>Português (Brasil)</option>
+                        <option value="en-US">English (US)</option>
+                        <option value="es-ES">Español</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Seção Sistema -->
+            <section id="sistema" class="settings-section">
+                <div class="section-header">
+                    <h2>Sistema</h2>
+                    <p>Configurações gerais do sistema</p>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Informações do Sistema</h3>
+                    
+                    <div class="system-info">
+                        <div class="info-row">
+                            <span>Versão</span>
+                            <span class="info-value">1.0.0</span>
+                        </div>
+                        <div class="info-row">
+                            <span>Última atualização</span>
+                            <span class="info-value">15/03/2024</span>
+                        </div>
+                        <div class="info-row">
+                            <span>Ambiente</span>
+                            <span class="info-value">Produção</span>
+                        </div>
+                        <div class="info-row">
+                            <span>Usuários ativos</span>
+                            <span class="info-value">1,234</span>
+                        </div>
+                    </div>
+
+                    <h3>Configurações de Backup</h3>
+                    <div class="backup-settings">
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked>
+                            <span>Backup automático diário</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked>
+                            <span>Compressão de dados</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox">
+                            <span>Backup em nuvem</span>
+                        </label>
+                    </div>
+
+                    <button class="backup-now-btn" onclick="createBackup()">
+                        <i class="fas fa-database"></i>
+                        Fazer backup agora
+                    </button>
+                </div>
+            </section>
+
+            <!-- Seção API -->
+            <section id="api" class="settings-section">
+                <div class="section-header">
+                    <h2>API e Integrações</h2>
+                    <p>Gerencie suas chaves de API e integrações</p>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Chaves de API</h3>
+                    
+                    <div class="api-keys">
+                        <div class="api-key-item">
+                            <div>
+                                <h4>Chave Principal</h4>
+                                <code>sk_live_••••••••••••••••</code>
+                            </div>
+                            <div class="api-actions">
+                                <button class="api-btn" onclick="copyApiKey('primary')">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                                <button class="api-btn" onclick="regenerateApiKey('primary')">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="api-key-item">
+                            <div>
+                                <h4>Chave de Teste</h4>
+                                <code>sk_test_••••••••••••••••</code>
+                            </div>
+                            <div class="api-actions">
+                                <button class="api-btn" onclick="copyApiKey('test')">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                                <button class="api-btn" onclick="regenerateApiKey('test')">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="generate-key-btn" onclick="generateNewKey()">
+                        <i class="fas fa-plus"></i>
+                        Gerar nova chave
+                    </button>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Webhooks</h3>
+                    
+                    <div class="webhook-list">
+                        <div class="webhook-item">
+                            <input type="url" placeholder="https://exemplo.com/webhook" value="https://api.exemplo.com/webhook">
+                            <button class="webhook-test" onclick="testWebhook(this)">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                            <button class="webhook-delete" onclick="deleteWebhook(this)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="add-webhook-btn" onclick="addWebhook()">
+                        <i class="fas fa-plus"></i>
+                        Adicionar webhook
+                    </button>
+                </div>
+            </section>
+
+            <!-- Seção Logs -->
+            <section id="logs" class="settings-section">
+                <div class="section-header">
+                    <h2>Logs e Auditoria</h2>
+                    <p>Visualize logs de atividades e auditoria</p>
+                </div>
+
+                <div class="settings-card">
+                    <div class="log-controls">
+                        <select class="log-filter">
+                            <option>Todos os tipos</option>
+                            <option>Login</option>
+                            <option>Configurações</option>
+                            <option>Segurança</option>
+                            <option>Erros</option>
+                        </select>
+                        
+                        <input type="date" class="log-date" value="2024-03-15">
+                        
+                        <button class="export-logs-btn" onclick="exportLogs()">
+                            <i class="fas fa-download"></i>
+                            Exportar logs
+                        </button>
+                    </div>
+
+                    <div class="logs-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Data/Hora</th>
+                                    <th>Tipo</th>
+                                    <th>Usuário</th>
+                                    <th>Ação</th>
+                                    <th>IP</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logsTableBody">
+                                <tr>
+                                    <td>15/03/2024 09:30</td>
+                                    <td><span class="log-badge login">Login</span></td>
+                                    <td>admin</td>
+                                    <td>Login realizado com sucesso</td>
+                                    <td>192.168.1.100</td>
+                                </tr>
+                                <tr>
+                                    <td>15/03/2024 09:25</td>
+                                    <td><span class="log-badge config">Config</span></td>
+                                    <td>admin</td>
+                                    <td>Alterou configurações de segurança</td>
+                                    <td>192.168.1.100</td>
+                                </tr>
+                                <tr>
+                                    <td>15/03/2024 09:20</td>
+                                    <td><span class="log-badge security">Segurança</span></td>
+                                    <td>sistema</td>
+                                    <td>Backup automático concluído</td>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast"></div>
+
+    <script src="assets/js/configuracoes.js"></script>
+</body>
+</html>

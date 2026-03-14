@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - SecureSystem</title>
+    <link rel="stylesheet" href="assets/css/cadastro.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="cadastro-container">
+        <div class="cadastro-left">
+            <div class="left-content">
+                <div class="logo-animation">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h1>SecureSystem</h1>
+                <p class="subtitle">Crie sua conta e comece a gerenciar seu sistema com segurança</p>
+                
+                <div class="features-list">
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Dashboard interativo</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Relatórios em tempo real</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Segurança avançada</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Suporte 24/7</span>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    <i class="fas fa-quote-left"></i>
+                    <p>Plataforma incrível! Interface moderna e fácil de usar.</p>
+                    <div class="testimonial-author">
+                        <img src="https://ui-avatars.com/api/?name=João+Silva&background=667eea&color=fff&size=40" alt="Avatar">
+                        <div>
+                            <strong>João Silva</strong>
+                            <span>Administrador</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cadastro-right">
+            <div class="cadastro-form-container">
+                <div class="progress-bar">
+                    <div class="progress-step active" data-step="1">
+                        <span>1</span>
+                        <small>Dados</small>
+                    </div>
+                    <div class="progress-step" data-step="2">
+                        <span>2</span>
+                        <small>Conta</small>
+                    </div>
+                    <div class="progress-step" data-step="3">
+                        <span>3</span>
+                        <small>Segurança</small>
+                    </div>
+                </div>
+
+                <form id="cadastroForm" class="cadastro-form">
+                    <div class="form-step active" id="step1">
+                        <h2>Dados Pessoais</h2>
+                        
+                        <div class="input-group">
+                            <label for="nome">
+                                <i class="fas fa-user"></i>
+                                Nome Completo
+                            </label>
+                            <input type="text" id="nome" name="nome" required 
+                                   placeholder="Digite seu nome completo">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="email">
+                                <i class="fas fa-envelope"></i>
+                                E-mail
+                            </label>
+                            <input type="email" id="email" name="email" required 
+                                   placeholder="seu@email.com">
+                        </div>
+
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="telefone">
+                                    <i class="fas fa-phone"></i>
+                                    Telefone
+                                </label>
+                                <input type="tel" id="telefone" name="telefone" 
+                                       placeholder="(11) 99999-9999">
+                            </div>
+
+                            <div class="input-group">
+                                <label for="departamento">
+                                    <i class="fas fa-building"></i>
+                                    Departamento
+                                </label>
+                                <select id="departamento" name="departamento">
+                                    <option value="">Selecione</option>
+                                    <option value="TI">TI</option>
+                                    <option value="Vendas">Vendas</option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="RH">RH</option>
+                                    <option value="Financeiro">Financeiro</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="button" class="next-btn" onclick="nextStep(2)">
+                            Próximo <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="form-step" id="step2">
+                        <h2>Dados da Conta</h2>
+                        
+                        <div class="input-group">
+                            <label for="login">
+                                <i class="fas fa-user-circle"></i>
+                                Nome de Usuário
+                            </label>
+                            <input type="text" id="login" name="login" required 
+                                   placeholder="usuario123">
+                            <small class="input-hint">Mínimo 4 caracteres</small>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="senha">
+                                <i class="fas fa-lock"></i>
+                                Senha
+                            </label>
+                            <div class="password-input">
+                                <input type="password" id="senha" name="senha" required 
+                                       placeholder="••••••••">
+                                <i class="fas fa-eye toggle-password" onclick="togglePassword('senha')"></i>
+                            </div>
+                            <div class="password-strength">
+                                <div class="strength-bar"></div>
+                                <div class="strength-bar"></div>
+                                <div class="strength-bar"></div>
+                                <div class="strength-bar"></div>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="confirmar_senha">
+                                <i class="fas fa-lock"></i>
+                                Confirmar Senha
+                            </label>
+                            <div class="password-input">
+                                <input type="password" id="confirmar_senha" name="confirmar_senha" required 
+                                       placeholder="••••••••">
+                                <i class="fas fa-eye toggle-password" onclick="togglePassword('confirmar_senha')"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="prev-btn" onclick="prevStep(1)">
+                                <i class="fas fa-arrow-left"></i> Anterior
+                            </button>
+                            <button type="button" class="next-btn" onclick="nextStep(3)">
+                                Próximo <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-step" id="step3">
+                        <h2>Configurações de Segurança</h2>
+                        
+                        <div class="security-options">
+                            <div class="security-option">
+                                <div class="option-info">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <div>
+                                        <h4>Autenticação em dois fatores</h4>
+                                        <p>Aumente a segurança da sua conta</p>
+                                    </div>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="twoFactor" name="twoFactor">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="security-option">
+                                <div class="option-info">
+                                    <i class="fas fa-bell"></i>
+                                    <div>
+                                        <h4>Notificações de login</h4>
+                                        <p>Receba alertas de novos acessos</p>
+                                    </div>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="loginAlerts" name="loginAlerts" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="security-option">
+                                <div class="option-info">
+                                    <i class="fas fa-clock"></i>
+                                    <div>
+                                        <h4>Sessão automática</h4>
+                                        <p>Mantenha-me conectado</p>
+                                    </div>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="rememberMe" name="rememberMe">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="terms-checkbox">
+                            <input type="checkbox" id="termos" name="termos" required>
+                            <label for="termos">
+                                Li e aceito os <a href="#">Termos de Uso</a> e 
+                                <a href="#">Política de Privacidade</a>
+                            </label>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="prev-btn" onclick="prevStep(2)">
+                                <i class="fas fa-arrow-left"></i> Anterior
+                            </button>
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-check"></i> Cadastrar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="login-link">
+                    Já tem uma conta? <a href="index.html">Faça login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/cadastro.js"></script>
+</body>
+</html>

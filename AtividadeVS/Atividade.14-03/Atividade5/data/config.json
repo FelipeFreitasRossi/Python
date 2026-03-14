@@ -1,0 +1,29 @@
+{
+    "sistema": {
+        "nome": "SecureSystem",
+        "versao": "1.0.0",
+        "max_tentativas": 3,
+        "tempo_bloqueio": 30,
+        "manutencao": false
+    },
+    "seguranca": {
+        "criptografia": "SHA256",
+        "sessao_timeout": 30,
+        "2fa": false,
+        "log_atividades": true
+    },
+    "interface": {
+        "tema_padrao": "escuro",
+        "animacoes": true,
+        "idiomas": [
+            "pt-BR",
+            "en-US",
+            "es-ES"
+        ]
+    },
+    "notificacoes": {
+        "email": true,
+        "sms": false,
+        "whatsapp": false
+    }
+}
