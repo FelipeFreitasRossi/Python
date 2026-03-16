@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro - SecureSystem</title>
-    <link rel="stylesheet" href="assets/css/cadastro.css">
+    <link rel="stylesheet" href="/assets/css/cadastro.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -36,18 +36,6 @@
                         <span>Suporte 24/7</span>
                     </div>
                 </div>
-
-                <div class="testimonial">
-                    <i class="fas fa-quote-left"></i>
-                    <p>Plataforma incrível! Interface moderna e fácil de usar.</p>
-                    <div class="testimonial-author">
-                        <img src="https://ui-avatars.com/api/?name=João+Silva&background=667eea&color=fff&size=40" alt="Avatar">
-                        <div>
-                            <strong>João Silva</strong>
-                            <span>Administrador</span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -69,6 +57,7 @@
                 </div>
 
                 <form id="cadastroForm" class="cadastro-form">
+                    <!-- Step 1 - Dados Pessoais -->
                     <div class="form-step active" id="step1">
                         <h2>Dados Pessoais</h2>
                         
@@ -97,7 +86,7 @@
                                     Telefone
                                 </label>
                                 <input type="tel" id="telefone" name="telefone" 
-                                       placeholder="(11) 99999-9999">
+                                       placeholder="(11) 99999-9999" oninput="formatPhone(this)">
                             </div>
 
                             <div class="input-group">
@@ -116,11 +105,10 @@
                             </div>
                         </div>
 
-                        <button type="button" class="next-btn" onclick="nextStep(2)">
-                            Próximo <i class="fas fa-arrow-right"></i>
-                        </button>
+                        <button type="button" class="next-btn">Próximo <i class="fas fa-arrow-right"></i></button>
                     </div>
 
+                    <!-- Step 2 - Dados da Conta -->
                     <div class="form-step" id="step2">
                         <h2>Dados da Conta</h2>
                         
@@ -131,7 +119,7 @@
                             </label>
                             <input type="text" id="login" name="login" required 
                                    placeholder="usuario123">
-                            <small class="input-hint">Mínimo 4 caracteres</small>
+                            <small class="input-hint">Mínimo 3 caracteres</small>
                         </div>
 
                         <div class="input-group">
@@ -165,15 +153,12 @@
                         </div>
 
                         <div class="form-navigation">
-                            <button type="button" class="prev-btn" onclick="prevStep(1)">
-                                <i class="fas fa-arrow-left"></i> Anterior
-                            </button>
-                            <button type="button" class="next-btn" onclick="nextStep(3)">
-                                Próximo <i class="fas fa-arrow-right"></i>
-                            </button>
+                            <button type="button" class="prev-btn">Anterior <i class="fas fa-arrow-left"></i></button>
+                            <button type="button" class="next-btn">Próximo <i class="fas fa-arrow-right"></i></button>
                         </div>
                     </div>
 
+                    <!-- Step 3 - Segurança -->
                     <div class="form-step" id="step3">
                         <h2>Configurações de Segurança</h2>
                         
@@ -205,48 +190,30 @@
                                     <span class="slider"></span>
                                 </label>
                             </div>
-
-                            <div class="security-option">
-                                <div class="option-info">
-                                    <i class="fas fa-clock"></i>
-                                    <div>
-                                        <h4>Sessão automática</h4>
-                                        <p>Mantenha-me conectado</p>
-                                    </div>
-                                </div>
-                                <label class="switch">
-                                    <input type="checkbox" id="rememberMe" name="rememberMe">
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
                         </div>
 
                         <div class="terms-checkbox">
                             <input type="checkbox" id="termos" name="termos" required>
                             <label for="termos">
-                                Li e aceito os <a href="#">Termos de Uso</a> e 
-                                <a href="#">Política de Privacidade</a>
+                                Li e aceito os <a href="#">Termos de Uso</a>
                             </label>
                         </div>
 
                         <div class="form-navigation">
-                            <button type="button" class="prev-btn" onclick="prevStep(2)">
-                                <i class="fas fa-arrow-left"></i> Anterior
-                            </button>
-                            <button type="submit" class="submit-btn">
-                                <i class="fas fa-check"></i> Cadastrar
-                            </button>
+                            <button type="button" class="prev-btn">Anterior <i class="fas fa-arrow-left"></i></button>
+                            <button type="submit" class="submit-btn">Cadastrar <i class="fas fa-check"></i></button>
                         </div>
                     </div>
                 </form>
 
                 <div class="login-link">
-                    Já tem uma conta? <a href="index.html">Faça login</a>
+                    Já tem uma conta? <a href="/">Faça login</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="assets/js/cadastro.js"></script>
+    <div id="toast" class="toast"></div>
+    <script src="/assets/js/cadastro.js"></script>
 </body>
 </html>

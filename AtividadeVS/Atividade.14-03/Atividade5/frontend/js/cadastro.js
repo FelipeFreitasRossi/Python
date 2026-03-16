@@ -1,5 +1,5 @@
 // frontend/js/cadastro.js
-// Versão completa com navegação entre steps, validações e envio para API
+// Versão final com navegação por steps, validações e envio para API
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("✅ Página de cadastro carregada");
@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const progressSteps = document.querySelectorAll('.progress-step');
     const nextButtons = document.querySelectorAll('.next-btn');
     const prevButtons = document.querySelectorAll('.prev-btn');
-    const submitBtn = document.querySelector('.submit-btn');
 
     let currentStep = 1;
     const totalSteps = 3;
@@ -220,6 +219,7 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.disabled = true;
 
         try {
+            // Usa caminho relativo (mesma origem) para evitar problemas de CORS
             const response = await fetch('/api/cadastro', {
                 method: 'POST',
                 headers: {
@@ -254,8 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Funções auxiliares (disponíveis globalmente para uso nos eventos inline do HTML, se necessário)
-
+    // Funções auxiliares (disponíveis globalmente para uso nos eventos inline do HTML)
     window.togglePassword = function(id) {
         const input = document.getElementById(id);
         const icon = event.currentTarget;
@@ -300,10 +299,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     bar.style.opacity = '1';
                 } else {
                     bar.style.opacity = '0.2';
-                    // mantém cor neutra
-                    if (bar.style.background !== '#d1d5db') {
-                        bar.style.background = '#d1d5db';
-                    }
                 }
             });
         });
