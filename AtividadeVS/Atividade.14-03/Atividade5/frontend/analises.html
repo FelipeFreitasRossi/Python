@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análises - SecureSystem</title>
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar (copie a mesma do dashboard) -->
+        <aside class="sidebar">
+            <div class="logo"><i class="fas fa-shield-alt"></i><span>SecureSystem</span></div>
+            <nav class="nav-menu">
+                <a href="/dashboard" class="nav-item"><i class="fas fa-home"></i><span>Dashboard</span></a>
+                <a href="/analises" class="nav-item active"><i class="fas fa-chart-line"></i><span>Análises</span></a>
+                <a href="/usuarios" class="nav-item"><i class="fas fa-users"></i><span>Usuários</span></a>
+                <a href="/configuracoes" class="nav-item"><i class="fas fa-cog"></i><span>Configurações</span></a>
+                <a href="/relatorios" class="nav-item"><i class="fas fa-file-alt"></i><span>Relatórios</span></a>
+                <a href="/agenda" class="nav-item"><i class="fas fa-calendar"></i><span>Agenda</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <img src="https://ui-avatars.com/api/?name={{ session.user }}&background=667eea&color=fff&size=40" alt="Avatar">
+                    <div><span class="user-name" id="sidebarUserName">{{ session.user }}</span><span class="user-role">Usuário</span></div>
+                </div>
+                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="dashboard-header">
+                <div class="header-left"><h1>Análises Avançadas</h1></div>
+                <div class="header-right">
+                    <div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="Pesquisar..."></div>
+                    <div class="header-actions">
+                        <button class="notification-btn"><i class="fas fa-bell"></i><span class="badge">3</span></button>
+                        <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="charts-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="chart-card">
+                    <h3>Acessos por Mês</h3>
+                    <canvas id="acessosMesChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Dispositivos Utilizados</h3>
+                    <canvas id="dispositivosChart"></canvas>
+                </div>
+            </div>
+
+            <div class="stats-grid" style="margin-top: 20px;">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);"><i class="fas fa-clock"></i></div>
+                    <div class="stat-details">
+                        <h3>Tempo Médio de Sessão</h3>
+                        <div class="stat-number" id="tempoMedio">8m 32s</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);"><i class="fas fa-chart-pie"></i></div>
+                    <div class="stat-details">
+                        <h3>Taxa de Retenção</h3>
+                        <div class="stat-number">78%</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/assets/js/analises.js"></script>
+</body>
+</html>

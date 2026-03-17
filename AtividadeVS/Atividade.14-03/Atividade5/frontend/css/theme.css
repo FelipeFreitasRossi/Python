@@ -1,0 +1,121 @@
+/* ===== TEMA CLARO (padrão) ===== */
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --border-color: #e5e7eb;
+    --card-bg: #ffffff;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    --primary: #667eea;
+    --primary-dark: #5a67d8;
+    --secondary: #764ba2;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --gray: #6b7280;
+    --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+}
+
+/* ===== TEMA ESCURO (ativado pela classe .dark-theme no body) ===== */
+.dark-theme {
+    --bg-primary: #1f2937;
+    --bg-secondary: #111827;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --border-color: #374151;
+    --card-bg: #1f2937;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --primary: #818cf8;
+    --primary-dark: #6366f1;
+    --secondary: #a78bfa;
+    --success: #34d399;
+    --warning: #fbbf24;
+    --danger: #f87171;
+    --gray: #9ca3af;
+    --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+}
+
+/* ===== APLICAÇÃO DAS VARIÁVEIS NOS ELEMENTOS ===== */
+body {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Sidebar */
+.sidebar,
+.dashboard-header,
+.stat-card,
+.chart-card,
+.activity-card,
+.quick-actions-card,
+.table-card,
+.modal-content,
+.card,
+.settings-card,
+.calendar-card {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    box-shadow: var(--shadow);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Textos */
+h1, h2, h3, h4, h5, h6, p, span, label, .text-muted {
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+/* Links */
+a {
+    color: var(--primary);
+    transition: color 0.3s ease;
+}
+a:hover {
+    color: var(--primary-dark);
+}
+
+/* Botões e inputs */
+input, select, textarea, button {
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Cards com ícones */
+.stat-icon {
+    background: var(--gradient) !important;
+}
+
+/* Links de navegação */
+.nav-item {
+    color: var(--text-secondary);
+}
+.nav-item:hover,
+.nav-item.active {
+    background: var(--gradient);
+    color: white;
+}
+
+/* Badges e tags */
+.badge {
+    background: var(--primary);
+    color: white;
+}
+
+/* Toast notifications */
+.toast {
+    background: var(--card-bg);
+    color: var(--text-primary);
+}
+
+/* Ajustes para gráficos (se necessário) */
+canvas {
+    filter: var(--canvas-filter, none);
+}
+.dark-theme canvas {
+    --canvas-filter: invert(0.9) hue-rotate(180deg);
+    /* Opcional: ajuste para gráficos no tema escuro */
+}

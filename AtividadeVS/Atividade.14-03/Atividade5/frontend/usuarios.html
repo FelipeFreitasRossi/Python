@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuários - SecureSystem</title>
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar (igual à anterior) -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>SecureSystem</span>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="/dashboard" class="nav-item {% if request.path == '/dashboard' %}active{% endif %}">
+                    <i class="fas fa-home"></i><span>Dashboard</span>
+                </a>
+                <a href="/analises" class="nav-item {% if request.path == '/analises' %}active{% endif %}">
+                    <i class="fas fa-chart-line"></i><span>Análises</span>
+                </a>
+                <a href="/usuarios" class="nav-item {% if request.path == '/usuarios' %}active{% endif %}">
+                    <i class="fas fa-users"></i><span>Usuários</span>
+                </a>
+                <a href="/configuracoes" class="nav-item {% if request.path == '/configuracoes' %}active{% endif %}">
+                    <i class="fas fa-cog"></i><span>Configurações</span>
+                </a>
+                <a href="/relatorios" class="nav-item {% if request.path == '/relatorios' %}active{% endif %}">
+                    <i class="fas fa-file-alt"></i><span>Relatórios</span>
+                </a>
+                <a href="/agenda" class="nav-item {% if request.path == '/agenda' %}active{% endif %}">
+                    <i class="fas fa-calendar"></i><span>Agenda</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <img src="https://ui-avatars.com/api/?name={{ session.user }}&background=667eea&color=fff&size=40" alt="Avatar">
+                    <div>
+                        <span class="user-name" id="sidebarUserName">{{ session.user }}</span>
+                        <span class="user-role">Usuário</span>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="dashboard-header">
+                <h1>Gerenciar Usuários</h1>
+                <button class="btn-primary" onclick="abrirModalNovo()"><i class="fas fa-plus"></i> Novo Usuário</button>
+            </header>
+
+            <div class="table-card">
+                <table class="data-table" id="tabelaUsuarios">
+                    <thead>
+                        <tr><th>Login</th><th>Nome</th><th>Email</th><th>Departamento</th><th>Telefone</th><th>Ações</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Edição/Novo -->
+    <div id="usuarioModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="fecharModal()">&times;</span>
+            <h2 id="modalTitulo">Editar Usuário</h2>
+            <form id="usuarioForm">
+                <input type="hidden" id="editLogin">
+                <div class="input-group"><label>Login</label><input type="text" id="editLoginField" disabled></div>
+                <div class="input-group"><label>Nome</label><input type="text" id="editNome" required></div>
+                <div class="input-group"><label>Email</label><input type="email" id="editEmail" required></div>
+                <div class="input-group"><label>Telefone</label><input type="text" id="editTelefone"></div>
+                <div class="input-group"><label>Departamento</label>
+                    <select id="editDepartamento">
+                        <option>TI</option><option>Vendas</option><option>Marketing</option><option>RH</option><option>Financeiro</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/assets/js/usuarios.js"></script>
+    <script src="/assets/js/theme.js"></script>
+</body>
+</html>

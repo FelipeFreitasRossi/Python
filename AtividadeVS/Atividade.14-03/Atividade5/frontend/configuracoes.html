@@ -4,58 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configurações - SecureSystem</title>
-    <link rel="stylesheet" href="assets/css/configuracoes.css">
+    <link rel="stylesheet" href="/assets/css/configuracoes.css">
+    <link rel="stylesheet" href="assets/css/theme.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="settings-container">
         <!-- Sidebar de Configurações -->
-        <aside class="settings-sidebar">
-            <div class="settings-header">
-                <h2>Configurações</h2>
-                <p>Personalize sua experiência</p>
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>SecureSystem</span>
             </div>
 
-            <nav class="settings-nav">
-                <a href="#perfil" class="settings-nav-item active" onclick="showSection('perfil')">
-                    <i class="fas fa-user"></i>
-                    <span>Perfil</span>
+            <nav class="nav-menu">
+                <a href="/dashboard" class="nav-item {% if request.path == '/dashboard' %}active{% endif %}">
+                    <i class="fas fa-home"></i><span>Dashboard</span>
                 </a>
-                <a href="#conta" class="settings-nav-item" onclick="showSection('conta')">
-                    <i class="fas fa-lock"></i>
-                    <span>Conta e Segurança</span>
+                <a href="/analises" class="nav-item {% if request.path == '/analises' %}active{% endif %}">
+                    <i class="fas fa-chart-line"></i><span>Análises</span>
                 </a>
-                <a href="#notificacoes" class="settings-nav-item" onclick="showSection('notificacoes')">
-                    <i class="fas fa-bell"></i>
-                    <span>Notificações</span>
+                <a href="/usuarios" class="nav-item {% if request.path == '/usuarios' %}active{% endif %}">
+                    <i class="fas fa-users"></i><span>Usuários</span>
                 </a>
-                <a href="#aparecia" class="settings-nav-item" onclick="showSection('aparecia')">
-                    <i class="fas fa-palette"></i>
-                    <span>Aparência</span>
+                <a href="/configuracoes" class="nav-item {% if request.path == '/configuracoes' %}active{% endif %}">
+                    <i class="fas fa-cog"></i><span>Configurações</span>
                 </a>
-                <a href="#privacidade" class="settings-nav-item" onclick="showSection('privacidade')">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>Privacidade</span>
+                <a href="/relatorios" class="nav-item {% if request.path == '/relatorios' %}active{% endif %}">
+                    <i class="fas fa-file-alt"></i><span>Relatórios</span>
                 </a>
-                <a href="#sistema" class="settings-nav-item" onclick="showSection('sistema')">
-                    <i class="fas fa-cog"></i>
-                    <span>Sistema</span>
-                </a>
-                <a href="#api" class="settings-nav-item" onclick="showSection('api')">
-                    <i class="fas fa-code"></i>
-                    <span>API e Integrações</span>
-                </a>
-                <a href="#logs" class="settings-nav-item" onclick="showSection('logs')">
-                    <i class="fas fa-history"></i>
-                    <span>Logs e Auditoria</span>
+                <a href="/agenda" class="nav-item {% if request.path == '/agenda' %}active{% endif %}">
+                    <i class="fas fa-calendar"></i><span>Agenda</span>
                 </a>
             </nav>
 
-            <div class="settings-footer">
-                <button class="save-all-btn" onclick="saveAllSettings()">
-                    <i class="fas fa-save"></i>
-                    Salvar todas as alterações
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <img src="https://ui-avatars.com/api/?name={{ session.user }}&background=667eea&color=fff&size=40" alt="Avatar">
+                    <div>
+                        <span class="user-name" id="sidebarUserName">{{ session.user }}</span>
+                        <span class="user-role">Usuário</span>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
                 </button>
             </div>
         </aside>
@@ -580,6 +573,7 @@
     <!-- Toast Notifications -->
     <div id="toast" class="toast"></div>
 
-    <script src="assets/js/configuracoes.js"></script>
+    <script src="/assets/js/configuracoes.js"></script>
+    <script src="/assets/js/theme.js"></script>
 </body>
 </html>
