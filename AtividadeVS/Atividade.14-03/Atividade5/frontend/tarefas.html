@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Tarefas - SecureSystem</title>
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <link rel="stylesheet" href="/assets/css/tarefas.css">
+    <link rel="stylesheet" href="/assets/css/theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo"><i class="fas fa-shield-alt"></i><span>SecureSystem</span></div>
+            <nav class="nav-menu">
+                <a href="/dashboard" class="nav-item"><i class="fas fa-home"></i><span>Dashboard</span></a>
+                <a href="/analises" class="nav-item"><i class="fas fa-chart-line"></i><span>Análises</span></a>
+                <a href="/usuarios" class="nav-item"><i class="fas fa-users"></i><span>Usuários</span></a>
+                <a href="/tarefas" class="nav-item active"><i class="fas fa-tasks"></i><span>Minhas Tarefas</span></a>
+                <a href="/configuracoes" class="nav-item"><i class="fas fa-cog"></i><span>Configurações</span></a>
+                <a href="/relatorios" class="nav-item"><i class="fas fa-file-alt"></i><span>Relatórios</span></a>
+                <a href="/agenda" class="nav-item"><i class="fas fa-calendar"></i><span>Agenda</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <img src="https://ui-avatars.com/api/?name={{ session.user }}&background=667eea&color=fff&size=40" alt="Avatar">
+                    <div><span class="user-name" id="sidebarUserName">{{ session.user }}</span><span class="user-role">Usuário</span></div>
+                </div>
+                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </aside>
+
+        <!-- Conteúdo Principal -->
+        <main class="main-content">
+            <header class="dashboard-header">
+                <h1><i class="fas fa-tasks"></i> Minhas Tarefas</h1>
+                <button class="btn-primary" onclick="abrirModalNovaTarefa()">
+                    <i class="fas fa-plus"></i> Nova Tarefa
+                </button>
+            </header>
+
+            <!-- Filtros -->
+            <div class="filtros-tarefas">
+                <button class="filtro-btn active" onclick="filtrarTarefas('todas')">Todas</button>
+                <button class="filtro-btn" onclick="filtrarTarefas('pendente')">Pendentes</button>
+                <button class="filtro-btn" onclick="filtrarTarefas('concluida')">Concluídas</button>
+                <button class="filtro-btn" onclick="filtrarTarefas('alta')">Alta Prioridade</button>
+            </div>
+
+            <!-- Lista de Tarefas -->
+            <div class="tarefas-container" id="listaTarefas">
+                <!-- As tarefas serão carregadas aqui via JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Nova Tarefa -->
+    <div id="novaTarefaModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Nova Tarefa</h2>
+                <button class="close-modal" onclick="fecharModal('novaTarefaModal')">&times;</button>
+            </div>
+            <form id="novaTarefaForm" onsubmit="criarNovaTarefa(event)">
+                <div class="form-group">
+                    <label>Título da Tarefa *</label>
+                    <input type="text" id="titulo_tarefa" required>
+                </div>
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <textarea id="descricao_tarefa" rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Prioridade</label>
+                        <select id="prioridade_tarefa">
+                            <option value="baixa">Baixa</option>
+                            <option value="media" selected>Média</option>
+                            <option value="alta">Alta</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Prazo</label>
+                        <input type="date" id="prazo_tarefa">
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn-secondary" onclick="fecharModal('novaTarefaModal')">Cancelar</button>
+                    <button type="submit" class="btn-primary">Criar Tarefa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/assets/js/tarefas.js"></script>
+</body>
+</html>

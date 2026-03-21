@@ -1,0 +1,72 @@
+{
+    "1": {
+        "id": 1,
+        "titulo": "Implementar sistema de login",
+        "descricao": "Criar autenticação com JWT e validação de credenciais",
+        "status": "concluida",
+        "prioridade": "alta",
+        "criado_em": "2026-03-21 08:33:17.003472",
+        "prazo": "2025-03-20",
+        "usuario": "admin"
+    },
+    "2": {
+        "id": 2,
+        "titulo": "Criar dashboard principal",
+        "descricao": "Desenvolver interface principal com gráficos e estatísticas",
+        "status": "pendente",
+        "prioridade": "alta",
+        "criado_em": "2026-03-21 08:33:17.003498",
+        "prazo": "2025-03-25",
+        "usuario": "admin"
+    },
+    "3": {
+        "id": 3,
+        "titulo": "Desenvolver página de relatórios",
+        "descricao": "Criar página para geração de relatórios em PDF",
+        "status": "pendente",
+        "prioridade": "media",
+        "criado_em": "2026-03-21 08:33:17.003505",
+        "prazo": "2025-03-30",
+        "usuario": "admin"
+    },
+    "4": {
+        "id": 4,
+        "titulo": "Testar sistema de autenticação",
+        "descricao": "Realizar testes de segurança e validação",
+        "status": "concluida",
+        "prioridade": "alta",
+        "criado_em": "2026-03-21 08:33:17.003511",
+        "prazo": "2025-03-18",
+        "usuario": "admin"
+    },
+    "5": {
+        "id": 5,
+        "titulo": "Documentar API",
+        "descricao": "Criar documentação completa da API",
+        "status": "pendente",
+        "prioridade": "baixa",
+        "criado_em": "2026-03-21 08:33:17.003517",
+        "prazo": "2025-04-05",
+        "usuario": "admin"
+    },
+    "6": {
+        "id": 6,
+        "titulo": "Tarefa teste",
+        "descricao": "Essa tarefa é uma tarefa teste",
+        "status": "concluida",
+        "prioridade": "media",
+        "criado_em": "2026-03-21 08:37:17.525457",
+        "prazo": "2026-03-22",
+        "usuario": "Fezinn"
+    },
+    "7": {
+        "id": 7,
+        "titulo": "Teste 2",
+        "descricao": "Tarefa, teste 2",
+        "status": "pendente",
+        "prioridade": "media",
+        "criado_em": "2026-03-21 08:38:20.877790",
+        "prazo": "2026-05-30",
+        "usuario": "Fezinn"
+    }
+}
