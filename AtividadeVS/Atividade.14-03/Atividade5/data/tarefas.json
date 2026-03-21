@@ -63,7 +63,7 @@
         "id": 7,
         "titulo": "Teste 2",
         "descricao": "Tarefa, teste 2",
-        "status": "pendente",
+        "status": "concluida",
         "prioridade": "media",
         "criado_em": "2026-03-21 08:38:20.877790",
         "prazo": "2026-05-30",
