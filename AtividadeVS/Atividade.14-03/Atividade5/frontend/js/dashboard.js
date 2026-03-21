@@ -325,3 +325,72 @@ async function logout() {
 function toggleSidebar() {
     document.querySelector('.sidebar')?.classList.toggle('collapsed');
 }
+// Carregar usuários recentes
+async function carregarUsuariosRecentes() {
+    try {
+        const response = await fetch('/api/usuarios');
+        const users = await response.json();
+        
+        const usersArray = Object.entries(users).slice(0, 5);
+        const tbody = document.getElementById('ultimosUsuariosBody');
+        
+        if (usersArray.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Nenhum usuário encontrado</td></tr>';
+            return;
+        }
+        
+        tbody.innerHTML = usersArray.map(([login, dados]) => `
+            <tr>
+                <td>
+                    <div class="user-cell">
+                        <img src="https://ui-avatars.com/api/?name=${dados.nome}&background=667eea&color=fff&size=35" alt="Avatar">
+                        <div>
+                            <strong>${dados.nome}</strong>
+                            <small>@${login}</small>
+                        </div>
+                    </div>
+                </td>
+                <td><span class="department-badge">${dados.departamento || 'Não informado'}</span></td>
+                <td><span class="status-badge ${dados.ultimo_acesso ? 'online' : 'offline'}">
+                    <i class="fas ${dados.ultimo_acesso ? 'fa-circle' : 'fa-circle'}"></i>
+                    ${dados.ultimo_acesso ? 'Online' : 'Offline'}
+                </span></td>
+                <td>${dados.ultimo_acesso ? new Date(dados.ultimo_acesso).toLocaleDateString('pt-BR') : 'Nunca'}</td>
+                <td><button class="action-btn-table edit" onclick="editarUsuario('${login}')"><i class="fas fa-edit"></i></button></td>
+            </tr>
+        `).join('');
+    } catch (error) {
+        console.error('Erro ao carregar usuários:', error);
+    }
+}
+
+// Funções de ação
+function gerarRelatorio() {
+    showToast('📄 Gerando relatório...', 'info');
+    setTimeout(() => showToast('✅ Relatório gerado!', 'success'), 2000);
+}
+
+function exportarDados() {
+    showToast('📊 Exportando dados...', 'info');
+    setTimeout(() => showToast('✅ Dados exportados!', 'success'), 1500);
+}
+
+function editarUsuario(login) {
+    showToast(`✏️ Editando usuário: ${login}`, 'info');
+}
+
+function logout() {
+    if (confirm('Deseja realmente sair?')) {
+        fetch('/api/logout', { method: 'POST' })
+            .then(() => window.location.href = '/');
+    }
+}
+
+// Inicializar
+document.addEventListener('DOMContentLoaded', () => {
+    carregarUsuariosRecentes();
+    carregarEstatisticas();
+    carregarGraficos();
+    carregarTarefas();
+    iniciarTimerSessao();
+});
