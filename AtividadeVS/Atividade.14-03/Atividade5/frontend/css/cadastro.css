@@ -1,4 +1,4 @@
-/* Reset e Estilos Globais */
+/* frontend/css/cadastro.css */
 * {
     margin: 0;
     padding: 0;
@@ -28,7 +28,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Efeito de fundo */
 body::before {
     content: '';
     position: fixed;
@@ -45,7 +44,6 @@ body::before {
     to { transform: rotate(360deg); }
 }
 
-/* Container Principal */
 .cadastro-container {
     display: flex;
     min-height: 100vh;
@@ -53,7 +51,6 @@ body::before {
     z-index: 1;
 }
 
-/* Lado Esquerdo - Banner */
 .cadastro-left {
     flex: 1;
     background: var(--gradient);
@@ -77,7 +74,6 @@ body::before {
     }
 }
 
-/* Efeito de ondas no fundo */
 .cadastro-left::before {
     content: '';
     position: absolute;
@@ -120,7 +116,6 @@ body::before {
 .logo-animation i {
     font-size: 3rem;
     color: white;
-    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
 }
 
 .left-content h1 {
@@ -137,7 +132,6 @@ body::before {
     line-height: 1.6;
 }
 
-/* Lista de Features */
 .features-list {
     margin-bottom: 3rem;
 }
@@ -187,7 +181,6 @@ body::before {
     font-weight: 500;
 }
 
-/* Depoimento */
 .testimonial {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
@@ -237,7 +230,6 @@ body::before {
     opacity: 0.8;
 }
 
-/* Lado Direito - Formulário */
 .cadastro-right {
     flex: 1;
     display: flex;
@@ -264,7 +256,6 @@ body::before {
     width: 100%;
 }
 
-/* Barra de Progresso */
 .progress-bar {
     display: flex;
     justify-content: space-between;
@@ -335,17 +326,6 @@ body::before {
     font-size: 1.2rem;
 }
 
-.progress-step.completed span i {
-    display: none;
-}
-
-/* Formulário */
-.cadastro-form {
-    background: white;
-    border-radius: 30px;
-    position: relative;
-}
-
 .form-step {
     display: none;
     animation: fadeInStep 0.5s ease-out;
@@ -378,7 +358,6 @@ body::before {
     font-size: 0.95rem;
 }
 
-/* Grupos de Input */
 .input-group {
     margin-bottom: 1.5rem;
 }
@@ -395,7 +374,6 @@ body::before {
 
 .input-group label i {
     color: var(--primary);
-    font-size: 1rem;
 }
 
 .input-group input,
@@ -419,10 +397,6 @@ body::before {
     box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
 }
 
-.input-group input::placeholder {
-    color: #d1d5db;
-}
-
 .input-group input.error {
     border-color: var(--danger);
 }
@@ -434,7 +408,6 @@ body::before {
     margin-top: 0.3rem;
 }
 
-/* Input Row */
 .input-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -442,7 +415,6 @@ body::before {
     margin-bottom: 0.5rem;
 }
 
-/* Campo de Senha */
 .password-input {
     position: relative;
 }
@@ -458,14 +430,8 @@ body::before {
     transform: translateY(-50%);
     cursor: pointer;
     color: var(--gray);
-    transition: color 0.3s;
 }
 
-.password-input .toggle-password:hover {
-    color: var(--primary);
-}
-
-/* Medidor de Força da Senha */
 .password-strength {
     display: flex;
     gap: 5px;
@@ -480,7 +446,6 @@ body::before {
     transition: all 0.3s;
 }
 
-/* Opções de Segurança */
 .security-options {
     margin: 2rem 0;
 }
@@ -531,7 +496,6 @@ body::before {
     font-size: 0.8rem;
 }
 
-/* Toggle Switch */
 .switch {
     position: relative;
     display: inline-block;
@@ -577,7 +541,6 @@ input:checked + .slider:before {
     transform: translateX(26px);
 }
 
-/* Termos */
 .terms-checkbox {
     margin: 2rem 0;
     padding: 1rem;
@@ -607,11 +570,6 @@ input:checked + .slider:before {
     font-weight: 600;
 }
 
-.terms-checkbox a:hover {
-    text-decoration: underline;
-}
-
-/* Navegação do Formulário */
 .form-navigation {
     display: flex;
     gap: 1rem;
@@ -653,57 +611,12 @@ input:checked + .slider:before {
     overflow: hidden;
 }
 
-.next-btn::before,
-.submit-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s;
-}
-
-.next-btn:hover::before,
-.submit-btn:hover::before {
-    left: 100%;
-}
-
 .next-btn:hover,
 .submit-btn:hover {
     transform: translateX(3px);
     box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
 }
 
-.next-btn:disabled,
-.submit-btn:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-}
-
-/* Loading State */
-.submit-btn.loading {
-    position: relative;
-    color: transparent;
-}
-
-.submit-btn.loading::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border: 2px solid white;
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-/* Link para Login */
 .login-link {
     text-align: center;
     margin-top: 2rem;
@@ -720,22 +633,14 @@ input:checked + .slider:before {
     color: var(--primary);
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.3s;
 }
 
-.login-link a:hover {
-    color: var(--secondary);
-    text-decoration: underline;
-}
-
-/* Toast Notification */
 .toast {
     position: fixed;
     bottom: 20px;
     right: 20px;
     padding: 1rem 2rem;
     background: white;
-    color: var(--dark);
     border-radius: 50px;
     box-shadow: var(--shadow);
     transform: translateY(100px);
@@ -760,12 +665,6 @@ input:checked + .slider:before {
     color: white;
 }
 
-.toast.info {
-    background: var(--primary);
-    color: white;
-}
-
-/* Mensagens de Erro */
 .error-message {
     color: var(--danger);
     font-size: 0.8rem;
@@ -774,10 +673,6 @@ input:checked + .slider:before {
     align-items: center;
     gap: 0.3rem;
     animation: slideDown 0.3s ease-out;
-}
-
-.error-message i {
-    font-size: 0.9rem;
 }
 
 @keyframes slideDown {
@@ -791,24 +686,17 @@ input:checked + .slider:before {
     }
 }
 
-/* Responsividade */
 @media (max-width: 1024px) {
     .cadastro-container {
         flex-direction: column;
     }
-    
     .cadastro-left {
         padding: 2rem;
-    }
-    
-    .left-content {
         text-align: center;
     }
-    
     .logo-animation {
         margin: 0 auto 2rem;
     }
-    
     .feature-item {
         justify-content: center;
     }
@@ -818,34 +706,21 @@ input:checked + .slider:before {
     .cadastro-right {
         padding: 2rem 1.5rem;
     }
-    
     .input-row {
         grid-template-columns: 1fr;
         gap: 0;
     }
-    
-    .progress-bar {
-        margin-bottom: 2rem;
-    }
-    
     .progress-step small {
         display: none;
     }
-    
     .form-step h2 {
         font-size: 1.5rem;
     }
-    
     .security-option {
         flex-direction: column;
         align-items: flex-start;
         gap: 1rem;
     }
-    
-    .option-info {
-        width: 100%;
-    }
-    
     .form-navigation {
         flex-direction: column;
     }
@@ -855,127 +730,10 @@ input:checked + .slider:before {
     .cadastro-left {
         padding: 1.5rem;
     }
-    
     .cadastro-right {
         padding: 1.5rem 1rem;
     }
-    
     .left-content h1 {
         font-size: 1.8rem;
     }
-    
-    .feature-item {
-        padding: 0.6rem 1rem;
-        font-size: 0.9rem;
-    }
-    
-    .testimonial {
-        padding: 1.5rem;
-    }
-    
-    .progress-step span {
-        width: 30px;
-        height: 30px;
-        font-size: 0.9rem;
-    }
-}
-
-/* Scrollbar Personalizada */
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--light);
-}
-
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--primary);
-}
-
-/* Animações Adicionais */
-.pulse {
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
-    }
-    70% {
-        box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
-    }
-}
-
-/* Efeito de Foco */
-.input-group.focused label {
-    color: var(--primary);
-}
-
-.input-group.focused i {
-    transform: scale(1.1);
-}
-
-/* Validação Visual */
-.input-group.valid input {
-    border-color: var(--success);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2310b981' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    padding-right: 35px;
-}
-
-.input-group.invalid input {
-    border-color: var(--danger);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ef4444' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    padding-right: 35px;
-}
-
-/* Dicas de Senha */
-.password-requirements {
-    background: linear-gradient(135deg, #667eea05 0%, #764ba205 100%);
-    padding: 1rem;
-    border-radius: 10px;
-    margin: 1rem 0;
-}
-
-.password-requirements p {
-    color: var(--gray);
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-}
-
-.password-requirements ul {
-    list-style: none;
-}
-
-.password-requirements li {
-    color: var(--gray);
-    font-size: 0.85rem;
-    margin-bottom: 0.3rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.password-requirements li i {
-    font-size: 0.8rem;
-}
-
-.password-requirements li.valid {
-    color: var(--success);
-}
-
-.password-requirements li.invalid {
-    color: var(--danger);
 }

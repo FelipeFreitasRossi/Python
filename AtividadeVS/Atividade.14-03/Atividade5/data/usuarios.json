@@ -1,11 +1,32 @@
 {
-    "Fezinn": {
-        "senha": "ff123236ad4518a1a3bd323814cd16562eb337c0117d9b1dabf027b05a9ba334",
-        "nome": "Felipe de Freitas Rossi",
-        "email": "lipeferossi@gmai.com",
+    "Felipe": {
+        "senha": "4943c4bccb6d425b061aa01442a4b7ecbaef22f6db4a07aa3be0d45eeabdcfb6",
+        "nome": "Felipe",
+        "email": "lipeferossi@gmail.com",
         "telefone": "(16) 9961-67381",
         "departamento": "TI",
-        "data_criacao": "2026-03-21 08:12:42.773500",
-        "ultimo_acesso": "2026-03-21 09:03:26.482170"
+        "data_criacao": "2026-03-27 16:20:21.686801",
+        "ultimo_acesso": "2026-03-28 00:00:16.740324"
+    },
+    "admin": {
+        "senha": "...",
+        "nome": "Administrador",
+        "email": "admin@sistema.com",
+        "departamento": "TI",
+        "ultimo_acesso": "2025-03-27T10:30:00"
+    },
+    "joao": {
+        "senha": "...",
+        "nome": "João Silva",
+        "email": "joao@email.com",
+        "departamento": "Vendas",
+        "ultimo_acesso": "2025-03-26T14:20:00"
+    },
+    "maria": {
+        "senha": "...",
+        "nome": "Maria Santos",
+        "email": "maria@email.com",
+        "departamento": "Marketing",
+        "ultimo_acesso": "2025-03-25T09:15:00"
     }
 }

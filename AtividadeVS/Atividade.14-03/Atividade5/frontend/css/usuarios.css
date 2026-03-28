@@ -1,0 +1,324 @@
+/* ===== PÁGINA DE USUÁRIOS ===== */
+
+/* Ações da página */
+.page-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.stats-badge {
+    background: var(--bg-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: 40px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stats-badge i {
+    color: var(--primary);
+}
+
+/* Botões principais */
+.btn-primary {
+    background: var(--gradient);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+    background: var(--border-color);
+}
+
+/* Tabela de usuários */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th {
+    text-align: left;
+    padding: 1rem 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.85rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.data-table td {
+    padding: 1rem 0.8rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+    vertical-align: middle;
+}
+
+.data-table tr:hover {
+    background: var(--bg-secondary);
+}
+
+.user-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.user-cell img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
+}
+
+.user-cell div {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-cell strong {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.user-cell small {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+.department-badge {
+    background: var(--bg-secondary);
+    padding: 0.2rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    display: inline-block;
+}
+
+/* Botões de ação na tabela */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn-table {
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+}
+
+.action-btn-table:hover {
+    background: var(--bg-secondary);
+}
+
+.action-btn-table.edit:hover {
+    background: var(--primary);
+    color: white;
+    border-color: transparent;
+}
+
+.action-btn-table.delete:hover {
+    background: var(--danger);
+    color: white;
+    border-color: transparent;
+}
+
+/* Paginação */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.page-btn {
+    padding: 0.4rem 0.8rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text-primary);
+    transition: all 0.2s;
+    font-size: 0.85rem;
+}
+
+.page-btn.active {
+    background: var(--gradient);
+    color: white;
+    border-color: transparent;
+}
+
+.page-btn:hover:not(.active) {
+    background: var(--border-color);
+}
+
+/* Modal de usuário */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    border-radius: 24px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-xl);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.close-modal {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+    line-height: 1;
+}
+
+.close-modal:hover {
+    color: var(--danger);
+}
+
+/* Formulário dentro do modal */
+.form-group {
+    padding: 0 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-group small {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Ajustes no tema escuro */
+.dark-theme .department-badge {
+    background: var(--bg-primary);
+}
+
+.dark-theme .page-btn {
+    background: var(--bg-primary);
+}
+
+.dark-theme .modal-content {
+    background: var(--bg-primary);
+}
+
+.dark-theme .form-group input,
+.dark-theme .form-group select {
+    background: var(--bg-secondary);
+}

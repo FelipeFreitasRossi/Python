@@ -320,11 +320,40 @@ def api_estatisticas():
 def api_graficos():
     if 'user' not in session:
         return jsonify({'error': 'Não autorizado'}), 401
+
+    users = load_users()
+    agora = datetime.now()
+    
+    # ===== ACESSOS POR DIA (últimos 7 dias) =====
+    acessos_por_dia = [0] * 7  # [seg, ter, qua, qui, sex, sáb, dom]
+    for u in users.values():
+        if u.get('ultimo_acesso'):
+            try:
+                data_acesso = datetime.fromisoformat(u['ultimo_acesso'])
+                diff = (agora - data_acesso).days
+                if diff < 7:
+                    # 0 = hoje, 1 = ontem, ... até 6 = 6 dias atrás
+                    # mas queremos na ordem dos dias da semana
+                    dia_semana = data_acesso.weekday()  # 0=segunda, 6=domingo
+                    acessos_por_dia[dia_semana] += 1
+            except:
+                pass
+
+    # ===== USUÁRIOS POR DEPARTAMENTO =====
+    dept_count = {}
+    for u in users.values():
+        dept = u.get('departamento', 'Não informado')
+        dept_count[dept] = dept_count.get(dept, 0) + 1
+
+    # Ordenar os departamentos para manter consistência
+    labels = list(dept_count.keys())
+    data = list(dept_count.values())
+
     return jsonify({
-        'acessos_por_dia': [5, 8, 12, 7, 10, 15, 9],
+        'acessos_por_dia': acessos_por_dia,
         'departamentos': {
-            'labels': ['TI', 'Vendas', 'Marketing', 'RH', 'Financeiro'],
-            'data': [10, 8, 5, 3, 2]
+            'labels': labels,
+            'data': data
         }
     })
 
@@ -474,10 +503,96 @@ def api_toggle_tarefa(tarefa_id):
 def api_analises():
     if 'user' not in session:
         return jsonify({'error': 'Não autorizado'}), 401
+
+    users = load_users()
+    agora = datetime.now()
+
+    # --- Total de acessos nos últimos 30 dias ---
+    total_acessos_30d = 0
+    for u in users.values():
+        if u.get('ultimo_acesso'):
+            try:
+                data = datetime.fromisoformat(u['ultimo_acesso'])
+                if (agora - data).days <= 30:
+                    total_acessos_30d += 1
+            except:
+                pass
+
+    # --- Tempo médio de sessão (mockado, mas você pode adaptar) ---
+    tempo_medio = "8m 32s"
+
+    # --- Usuários ativos (últimos 7 dias) ---
+    usuarios_ativos = 0
+    for u in users.values():
+        if u.get('ultimo_acesso'):
+            try:
+                data = datetime.fromisoformat(u['ultimo_acesso'])
+                if (agora - data).days <= 7:
+                    usuarios_ativos += 1
+            except:
+                pass
+
+    # --- Acessos por mês (últimos 12 meses) ---
+    acessos_por_mes = [0] * 12
+    for u in users.values():
+        if u.get('ultimo_acesso'):
+            try:
+                data = datetime.fromisoformat(u['ultimo_acesso'])
+                mes_index = data.month - 1
+                acessos_por_mes[mes_index] += 1
+            except:
+                pass
+
+    # --- Distribuição por dispositivo (mock) ---
+    dispositivos = {
+        'labels': ['Desktop', 'Mobile', 'Tablet'],
+        'data': [450, 320, 80]
+    }
+
+    # --- Métricas por departamento (reais) ---
+    dept_metrics = {}
+    for login, dados in users.items():
+        dept = dados.get('departamento', 'Não informado')
+        if dept not in dept_metrics:
+            dept_metrics[dept] = {
+                'total_usuarios': 0,
+                'acessos_30d': 0,
+                'tempo_medio': 0
+            }
+        dept_metrics[dept]['total_usuarios'] += 1
+        if dados.get('ultimo_acesso'):
+            try:
+                data = datetime.fromisoformat(dados['ultimo_acesso'])
+                if (agora - data).days <= 30:
+                    dept_metrics[dept]['acessos_30d'] += 1
+            except:
+                pass
+
+    # Tempo médio por departamento (exemplo baseado no nome)
+    for dept in dept_metrics:
+        dept_metrics[dept]['tempo_medio'] = round(4 + len(dept) % 3, 1)
+
+    dept_list = [
+        {
+            'departamento': dept,
+            'total_usuarios': info['total_usuarios'],
+            'acessos_30d': info['acessos_30d'],
+            'tempo_medio': f"{info['tempo_medio']} min"
+        }
+        for dept, info in dept_metrics.items()
+    ]
+    dept_list.sort(key=lambda x: x['total_usuarios'], reverse=True)
+
+    total_acessos = sum(acessos_por_mes)
+
     return jsonify({
-        'acessos_por_mes': [45, 52, 68, 74, 89, 102, 118, 135, 122, 110, 95, 80],
-        'dispositivos': {'labels': ['Desktop', 'Mobile', 'Tablet'], 'data': [450, 320, 80]},
-        'tempo_medio': '8m 32s'
+        'total_acessos_30d': total_acessos_30d,
+        'tempo_medio': tempo_medio,
+        'usuarios_ativos': usuarios_ativos,
+        'acessos_por_mes': acessos_por_mes,
+        'dispositivos': dispositivos,
+        'dept_metrics': dept_list,
+        'total_acessos': total_acessos
     })
 
 # ===== APIs DE AGENDA =====
