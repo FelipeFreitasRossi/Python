@@ -5,70 +5,258 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda - SecureSystem</title>
     <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <link rel="stylesheet" href="/assets/css/agenda.css">
     <link rel="stylesheet" href="/assets/css/theme.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="dashboard">
-<aside class="sidebar">
-    <div class="logo">
-        <i class="fas fa-shield-alt"></i>
-        <span>SecureSystem</span>
-    </div>
-
-    <nav class="nav-menu">
-        <a href="/dashboard" class="nav-item {% if request.path == '/dashboard' %}active{% endif %}">
-            <i class="fas fa-home"></i><span>Dashboard</span>
-        </a>
-        <a href="/analises" class="nav-item {% if request.path == '/analises' %}active{% endif %}">
-            <i class="fas fa-chart-line"></i><span>Análises</span>
-        </a>
-        <a href="/usuarios" class="nav-item {% if request.path == '/usuarios' %}active{% endif %}">
-            <i class="fas fa-users"></i><span>Usuários</span>
-        </a>
-        <a href="/configuracoes" class="nav-item {% if request.path == '/configuracoes' %}active{% endif %}">
-            <i class="fas fa-cog"></i><span>Configurações</span>
-        </a>
-        <a href="/relatorios" class="nav-item {% if request.path == '/relatorios' %}active{% endif %}">
-            <i class="fas fa-file-alt"></i><span>Relatórios</span>
-        </a>
-        <a href="/agenda" class="nav-item {% if request.path == '/agenda' %}active{% endif %}">
-            <i class="fas fa-calendar"></i><span>Agenda</span>
-        </a>
-    </nav>
-
-    <div class="sidebar-footer">
-        <div class="user-info">
-            <img src="https://ui-avatars.com/api/?name={{ session.user }}&background=667eea&color=fff&size=40" alt="Avatar">
-            <div>
-                <span class="user-name" id="sidebarUserName">{{ session.user }}</span>
-                <span class="user-role">Usuário</span>
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon"><i class="fas fa-shield-alt"></i></div>
+                <span>SecureSystem</span>
             </div>
-        </div>
-        <button class="logout-btn" onclick="logout()">
-            <i class="fas fa-sign-out-alt"></i>
-        </button>
-    </div>
-</aside>
+            <nav class="nav-menu">
+                <a href="/dashboard" class="nav-item"><i class="fas fa-home"></i><span>Dashboard</span></a>
+                <a href="/analises" class="nav-item"><i class="fas fa-chart-line"></i><span>Análises</span></a>
+                <a href="/usuarios" class="nav-item"><i class="fas fa-users"></i><span>Usuários</span></a>
+                <a href="/tarefas" class="nav-item"><i class="fas fa-tasks"></i><span>Minhas Tarefas</span></a>
+                <a href="/configuracoes" class="nav-item"><i class="fas fa-cog"></i><span>Configurações</span></a>
+                <a href="/relatorios" class="nav-item"><i class="fas fa-file-alt"></i><span>Relatórios</span></a>
+                <a href="/agenda" class="nav-item active"><i class="fas fa-calendar-alt"></i><span>Agenda</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <img src="https://ui-avatars.com/api/?name={{ session.user }}&background=667eea&color=fff&size=40&bold=true" alt="Avatar">
+                        <div class="online-status"></div>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name">{{ session.user }}</span>
+                        <span class="user-role">Administrador</span>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </aside>
+
+        <!-- Conteúdo Principal -->
         <main class="main-content">
-            <header class="dashboard-header"><h1>Agenda de Eventos</h1></header>
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <div class="header-title">
+                        <h1>Agenda</h1>
+                        <p>Organize seus compromissos e eventos</p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="search-container">
+                        <div class="search-wrapper">
+                            <div class="search-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="currentColor" stroke-width="2"/></svg></div>
+                            <input type="text" id="searchEvento" placeholder="Buscar eventos...">
+                            <div class="search-shortcut"><kbd>⌘</kbd><kbd>K</kbd></div>
+                        </div>
+                    </div>
+                    <div class="header-actions">
+                        <div class="action-btn-wrapper"><button class="action-btn notification-btn"><i class="fas fa-bell"></i><span class="badge">3</span></button></div>
+                        <div class="action-btn-wrapper"><button class="action-btn settings-btn"><i class="fas fa-cog"></i></button></div>
+                        <div class="action-btn-wrapper"><button class="action-btn theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button></div>
+                        <div class="user-menu-container">
+                            <button class="user-avatar-btn" id="userMenuBtn">
+                                <div class="avatar-wrapper"><img src="https://ui-avatars.com/api/?name={{ session.user }}&background=667eea&color=fff&size=40&bold=true" alt="Avatar"><span class="online-dot"></span></div>
+                                <div class="user-info-mini"><span class="user-name-mini">{{ session.user }}</span><span class="user-role-mini">Admin</span></div>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="user-dropdown" id="userDropdown">
+                                <div class="dropdown-header"><div class="dropdown-avatar"><img src="https://ui-avatars.com/api/?name={{ session.user }}&background=667eea&color=fff&size=48" alt="Avatar"></div><div><h4>{{ session.user }}</h4><p>Administrador</p><span>{{ session.user }}@sistema.com</span></div></div>
+                                <div class="dropdown-menu"><a href="#" class="dropdown-item"><i class="fas fa-user"></i> Meu Perfil</a><a href="/configuracoes" class="dropdown-item"><i class="fas fa-cog"></i> Configurações</a><div class="dropdown-divider"></div><button class="dropdown-item logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
 
-            <div class="calendar-header">
-                <button id="mesAnterior"><i class="fas fa-chevron-left"></i></button>
-                <h2 id="mesAtual">Março 2025</h2>
-                <button id="mesProximo"><i class="fas fa-chevron-right"></i></button>
+            <!-- Cards de Estatísticas Premium -->
+            <div class="stats-premium">
+                <div class="stat-card-premium">
+                    <div class="stat-glow"></div>
+                    <div class="stat-icon-wrapper">
+                        <div class="stat-icon-bg">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                    </div>
+                    <div class="stat-content">
+                        <span class="stat-label">Eventos Hoje</span>
+                        <div class="stat-value" id="eventosHoje">0</div>
+                    </div>
+                    <div class="stat-decoration"></div>
+                </div>
+                <div class="stat-card-premium">
+                    <div class="stat-glow"></div>
+                    <div class="stat-icon-wrapper">
+                        <div class="stat-icon-bg">
+                            <i class="fas fa-calendar-week"></i>
+                        </div>
+                    </div>
+                    <div class="stat-content">
+                        <span class="stat-label">Esta Semana</span>
+                        <div class="stat-value" id="eventosSemana">0</div>
+                    </div>
+                    <div class="stat-decoration"></div>
+                </div>
+                <div class="stat-card-premium">
+                    <div class="stat-glow"></div>
+                    <div class="stat-icon-wrapper">
+                        <div class="stat-icon-bg">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                    <div class="stat-content">
+                        <span class="stat-label">Próximo Evento</span>
+                        <div class="stat-value" id="proximoEvento">--</div>
+                    </div>
+                    <div class="stat-decoration"></div>
+                </div>
             </div>
 
-            <div class="calendar-grid" id="calendario"></div>
+            <!-- Calendário Principal Premium -->
+            <div class="calendar-premium">
+                <div class="calendar-premium-header">
+                    <div class="calendar-nav-premium">
+                        <button class="nav-btn-premium" id="prevMonth">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="month-year">
+                            <span id="currentMonthYear">Março 2025</span>
+                        </div>
+                        <button class="nav-btn-premium" id="nextMonth">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <button class="btn-premium" id="addEventBtn">
+                        <i class="fas fa-plus"></i>
+                        <span>Novo Evento</span>
+                    </button>
+                </div>
 
-            <div class="eventos-list" id="eventosLista">
-                <h3>Eventos do Dia</h3>
-                <ul id="eventosDia"></ul>
+                <div class="calendar-grid-premium">
+                    <div class="weekdays-premium">
+                        <span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span>
+                    </div>
+                    <div class="days-premium" id="calendarDays"></div>
+                </div>
+            </div>
+
+            <!-- Agenda do Dia Premium -->
+            <div class="agenda-premium">
+                <div class="agenda-premium-header">
+                    <div class="agenda-date-premium">
+                        <div class="date-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="date-info">
+                            <h3 id="selectedDateLabel">Selecione um dia</h3>
+                            <p>Visualize e gerencie seus compromissos</p>
+                        </div>
+                    </div>
+                    <button class="btn-outline-premium" id="filterTodayBtn">
+                        <i class="fas fa-calendar-day"></i>
+                        <span>Hoje</span>
+                    </button>
+                </div>
+                <div class="events-premium" id="eventsList">
+                    <div class="empty-premium">
+                        <div class="empty-icon">
+                            <i class="fas fa-calendar-plus"></i>
+                        </div>
+                        <h4>Nenhum evento agendado</h4>
+                        <p>Clique em um dia para adicionar eventos</p>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
-    <script src="/assets/js/agenda.js"></script>
+
+    <!-- Modal Premium -->
+    <div id="eventoModal" class="modal-premium">
+        <div class="modal-premium-content">
+            <div class="modal-premium-header">
+                <h2 id="modalTitle">Novo Evento</h2>
+                <button class="modal-close" onclick="fecharModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="eventoForm">
+                <input type="hidden" id="eventoId">
+                <div class="form-group-premium">
+                    <label for="eventoTitulo">Título do evento</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-heading"></i>
+                        <input type="text" id="eventoTitulo" placeholder="Ex: Reunião de equipe">
+                    </div>
+                </div>
+                <div class="form-row-premium">
+                    <div class="form-group-premium">
+                        <label for="eventoData">Data</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-calendar"></i>
+                            <input type="date" id="eventoData">
+                        </div>
+                    </div>
+                    <div class="form-group-premium">
+                        <label for="eventoHora">Hora</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-clock"></i>
+                            <input type="time" id="eventoHora">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group-premium">
+                    <label>Tipo de evento</label>
+                    <div class="tipo-grid-premium">
+                        <label class="tipo-card-premium" data-tipo="reuniao">
+                            <input type="radio" name="eventoTipo" value="reuniao" checked>
+                            <i class="fas fa-users"></i>
+                            <span>Reunião</span>
+                        </label>
+                        <label class="tipo-card-premium" data-tipo="prazo">
+                            <input type="radio" name="eventoTipo" value="prazo">
+                            <i class="fas fa-flag-checkered"></i>
+                            <span>Prazo</span>
+                        </label>
+                        <label class="tipo-card-premium" data-tipo="evento">
+                            <input type="radio" name="eventoTipo" value="evento">
+                            <i class="fas fa-glass-cheers"></i>
+                            <span>Evento</span>
+                        </label>
+                        <label class="tipo-card-premium" data-tipo="lembrete">
+                            <input type="radio" name="eventoTipo" value="lembrete">
+                            <i class="fas fa-bell"></i>
+                            <span>Lembrete</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group-premium">
+                    <label for="eventoDescricao">Descrição</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-align-left"></i>
+                        <textarea id="eventoDescricao" rows="3" placeholder="Descrição detalhada do evento..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-premium-footer">
+                    <button type="button" class="btn-secondary-premium" onclick="fecharModal()">Cancelar</button>
+                    <button type="submit" class="btn-primary-premium">Salvar Evento</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast" class="toast-premium"></div>
+
     <script src="/assets/js/theme.js"></script>
+    <script src="/assets/js/header.js"></script>
+    <script src="/assets/js/agenda.js"></script>
 </body>
 </html>

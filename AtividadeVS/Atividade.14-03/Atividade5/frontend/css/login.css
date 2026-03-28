@@ -17,6 +17,7 @@
     --border: #e5e7eb;
     --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     --shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 body {
@@ -29,6 +30,7 @@ body {
     overflow-x: hidden;
 }
 
+/* Efeito de fundo animado */
 body::before {
     content: '';
     position: absolute;
@@ -71,6 +73,7 @@ body::before {
     }
 }
 
+/* Header do Login */
 .login-header {
     text-align: center;
     margin-bottom: 2rem;
@@ -103,6 +106,7 @@ body::before {
     font-size: 0.95rem;
 }
 
+/* Formulário */
 .login-form {
     margin-bottom: 1.5rem;
 }
@@ -141,6 +145,11 @@ body::before {
     box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
 }
 
+.input-group input::placeholder {
+    color: #d1d5db;
+}
+
+/* Campo de senha */
 .password-input {
     position: relative;
 }
@@ -156,8 +165,14 @@ body::before {
     transform: translateY(-50%);
     cursor: pointer;
     color: var(--gray);
+    transition: color 0.3s;
 }
 
+.password-input .toggle-password:hover {
+    color: var(--primary);
+}
+
+/* Opções de login */
 .login-options {
     display: flex;
     justify-content: space-between;
@@ -185,12 +200,15 @@ body::before {
     color: var(--primary);
     text-decoration: none;
     font-size: 0.9rem;
+    transition: color 0.3s;
 }
 
 .forgot-password:hover {
+    color: var(--secondary);
     text-decoration: underline;
 }
 
+/* Botão de login */
 .login-btn {
     width: 100%;
     padding: 1rem;
@@ -206,6 +224,19 @@ body::before {
     justify-content: center;
     gap: 0.5rem;
     transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
 }
 
 .login-btn:hover {
@@ -213,6 +244,16 @@ body::before {
     box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
 }
 
+.login-btn:hover::before {
+    left: 100%;
+}
+
+.login-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Footer do login */
 .login-footer {
     text-align: center;
     margin-top: 1.5rem;
@@ -229,8 +270,15 @@ body::before {
     color: var(--primary);
     text-decoration: none;
     font-weight: 600;
+    transition: color 0.3s;
 }
 
+.login-footer a:hover {
+    color: var(--secondary);
+    text-decoration: underline;
+}
+
+/* Social Login */
 .social-login {
     text-align: center;
     margin-top: 1.5rem;
@@ -267,6 +315,11 @@ body::before {
     gap: 1rem;
 }
 
+.social-link {
+    text-decoration: none;
+    display: inline-block;
+}
+
 .social-btn {
     width: 50px;
     height: 50px;
@@ -276,6 +329,9 @@ body::before {
     cursor: pointer;
     transition: all 0.3s;
     font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .social-btn:hover {
@@ -283,21 +339,42 @@ body::before {
     border-color: transparent;
 }
 
-.social-btn.google:hover {
-    background: #DB4437;
+/* Instagram */
+.social-btn.instagram {
+    background: linear-gradient(45deg, #f09433, #d62976, #962fbf, #405de6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.social-btn.instagram:hover {
+    background: linear-gradient(45deg, #f09433, #d62976, #962fbf, #405de6);
     color: white;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    box-shadow: 0 5px 15px rgba(214, 41, 118, 0.3);
+}
+
+.social-btn.instagram:hover i {
+    color: white;
+}
+
+/* GitHub */
+.social-btn.github {
+    color: #333;
 }
 
 .social-btn.github:hover {
     background: #333;
     color: white;
+    box-shadow: 0 5px 15px rgba(51, 51, 51, 0.3);
 }
 
-.social-btn.microsoft:hover {
-    background: #00A4EF;
+.social-btn.github:hover i {
     color: white;
 }
 
+/* Footer links */
 .login-footer-links {
     display: flex;
     justify-content: center;
@@ -309,25 +386,29 @@ body::before {
     color: var(--gray);
     text-decoration: none;
     font-size: 0.8rem;
+    transition: color 0.3s;
 }
 
 .login-footer-links a:hover {
     color: var(--primary);
 }
 
+/* Toast */
 .toast {
     position: fixed;
     bottom: 20px;
     right: 20px;
     padding: 1rem 2rem;
     background: white;
-    border-radius: 50px;
+    color: var(--dark);
+    border-radius: 12px;
     box-shadow: var(--shadow);
     transform: translateY(100px);
     opacity: 0;
     transition: all 0.3s;
     z-index: 1000;
     font-weight: 500;
+    border-left: 4px solid var(--primary);
 }
 
 .toast.show {
@@ -338,24 +419,80 @@ body::before {
 .toast.success {
     background: var(--success);
     color: white;
+    border-left-color: white;
 }
 
 .toast.error {
     background: var(--danger);
     color: white;
+    border-left-color: white;
 }
 
+/* Tema escuro */
+.dark-theme .login-card {
+    background: var(--card-bg);
+}
+
+.dark-theme .input-group input {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.dark-theme .input-group label {
+    color: var(--text-secondary);
+}
+
+.dark-theme .login-footer p {
+    color: var(--text-secondary);
+}
+
+.dark-theme .social-btn {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+}
+
+.dark-theme .social-btn.instagram i {
+    color: white;
+}
+
+.dark-theme .social-btn.github {
+    color: var(--text-primary);
+}
+
+.dark-theme .checkbox-label {
+    color: var(--text-secondary);
+}
+
+/* Responsividade */
 @media (max-width: 480px) {
+    .login-container {
+        padding: 1rem;
+    }
+    
     .login-card {
         padding: 1.5rem;
     }
+    
+    .logo i {
+        font-size: 2rem;
+    }
+    
     .logo h1 {
         font-size: 1.5rem;
     }
+    
+    .login-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
     .social-login p::before,
     .social-login p::after {
         width: 20%;
     }
+    
     .login-footer-links {
         flex-direction: column;
         align-items: center;

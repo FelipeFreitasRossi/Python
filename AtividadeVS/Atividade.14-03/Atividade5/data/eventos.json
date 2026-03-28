@@ -1,0 +1,42 @@
+{
+    "1": {
+        "id": 1,
+        "titulo": "Reunião de planejamento",
+        "data": "2026-03-28",
+        "hora": "10:00",
+        "tipo": "reuniao",
+        "descricao": "Planejamento do próximo sprint",
+        "usuario": "admin",
+        "criado_em": "2026-03-28 10:28:11.525303"
+    },
+    "2": {
+        "id": 2,
+        "titulo": "Entrega de relatório",
+        "data": "2026-03-30",
+        "hora": "14:30",
+        "tipo": "prazo",
+        "descricao": "Relatório mensal de atividades",
+        "usuario": "admin",
+        "criado_em": "2026-03-28 10:28:11.525325"
+    },
+    "3": {
+        "id": 3,
+        "titulo": "Workshop de segurança",
+        "data": "2026-04-02",
+        "hora": "09:00",
+        "tipo": "evento",
+        "descricao": "Treinamento de segurança da informação",
+        "usuario": "admin",
+        "criado_em": "2026-03-28 10:28:11.525335"
+    },
+    "4": {
+        "id": 4,
+        "titulo": "18 anos",
+        "data": "2026-04-11",
+        "hora": "00:00",
+        "tipo": "lembrete",
+        "descricao": "Meus 18 anos",
+        "usuario": "Felipe",
+        "criado_em": "2026-03-28 10:28:41.489640"
+    }
+}

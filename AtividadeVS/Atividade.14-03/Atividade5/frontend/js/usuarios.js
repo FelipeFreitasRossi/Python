@@ -4,11 +4,26 @@ let usuariosFiltrados = [];
 let currentPage = 1;
 const itemsPerPage = 10;
 let currentEditLogin = null;
+let isAdmin = false;
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Verificar se o usuário é admin
+    verificarPermissaoAdmin();
     carregarUsuarios();
     configurarEventos();
 });
+
+async function verificarPermissaoAdmin() {
+    try {
+        const response = await fetch('/api/usuario');
+        const data = await response.json();
+        // Verificar se o usuário logado é admin (pode ser ajustado conforme sua lógica)
+        // Por enquanto, vamos considerar que apenas 'admin' tem permissão
+        isAdmin = sessionStorage.getItem('username') === 'admin' || data.nome === 'Administrador';
+    } catch (error) {
+        console.error('Erro ao verificar permissão:', error);
+    }
+}
 
 function configurarEventos() {
     const searchInput = document.getElementById('searchUsuario');
@@ -37,11 +52,13 @@ async function carregarUsuarios() {
         const response = await fetch('/api/usuarios');
         if (!response.ok) throw new Error('Erro ao carregar usuários');
         const data = await response.json();
+        
         // Converter objeto para array
         todosUsuarios = Object.entries(data).map(([login, dados]) => ({
             login: login,
             ...dados
         }));
+        
         // Ordenar por nome
         todosUsuarios.sort((a,b) => a.nome.localeCompare(b.nome));
         usuariosFiltrados = [...todosUsuarios];
@@ -77,7 +94,7 @@ function atualizarTabela() {
     const usuariosPagina = usuariosFiltrados.slice(start, end);
 
     if (usuariosPagina.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Nenhum usuário encontrado</td></tr>';
+        tbody.innerHTML = '发展<td colspan="6" style="text-align: center;">Nenhum usuário encontrado</td> </tr>';
         document.getElementById('pagination').innerHTML = '';
         return;
     }
@@ -99,12 +116,16 @@ function atualizarTabela() {
             <td>${u.ultimo_acesso ? formatarData(u.ultimo_acesso) : 'Nunca'}</td>
             <td>
                 <div class="action-buttons">
-                    <button class="action-btn-table edit" onclick="editarUsuario('${u.login}')" title="Editar">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="action-btn-table delete" onclick="deletarUsuario('${u.login}')" title="Excluir">
-                        <i class="fas fa-trash"></i>
-                    </button>
+                    ${isAdmin ? `
+                        <button class="action-btn-table edit" onclick="editarUsuario('${u.login}')" title="Editar">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn-table delete" onclick="deletarUsuario('${u.login}')" title="Excluir">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    ` : `
+                        <span class="no-actions">Sem permissão</span>
+                    `}
                 </div>
             </td>
         </tr>
@@ -130,6 +151,11 @@ function irParaPagina(page) {
 }
 
 function abrirModalNovo() {
+    if (!isAdmin) {
+        showToast('Apenas administradores podem criar novos usuários', 'error');
+        return;
+    }
+    
     document.getElementById('modalTitle').textContent = 'Novo Usuário';
     document.getElementById('editLogin').value = '';
     document.getElementById('login').value = '';
@@ -146,8 +172,16 @@ function abrirModalNovo() {
 }
 
 function editarUsuario(login) {
+    if (!isAdmin) {
+        showToast('Apenas administradores podem editar usuários', 'error');
+        return;
+    }
+    
     const user = todosUsuarios.find(u => u.login === login);
-    if (!user) return;
+    if (!user) {
+        showToast('Usuário não encontrado', 'error');
+        return;
+    }
 
     document.getElementById('modalTitle').textContent = 'Editar Usuário';
     document.getElementById('editLogin').value = login;
@@ -156,8 +190,8 @@ function editarUsuario(login) {
     document.getElementById('senha').value = '';
     document.getElementById('senha').required = false;
     document.getElementById('senhaHint').style.display = 'block';
-    document.getElementById('nome').value = user.nome;
-    document.getElementById('email').value = user.email;
+    document.getElementById('nome').value = user.nome || '';
+    document.getElementById('email').value = user.email || '';
     document.getElementById('telefone').value = user.telefone || '';
     document.getElementById('departamento').value = user.departamento || '';
     document.getElementById('usuarioModal').style.display = 'flex';
@@ -184,7 +218,7 @@ async function salvarUsuario(event) {
     let url, method;
     if (currentEditLogin) {
         // Edição
-        url = `/api/usuarios/${currentEditLogin}`;
+        url = `/api/usuarios/${encodeURIComponent(currentEditLogin)}`;
         method = 'PUT';
         if (senha) payload.senha = senha;
     } else {
@@ -205,9 +239,9 @@ async function salvarUsuario(event) {
         if (response.ok && result.success) {
             showToast(currentEditLogin ? 'Usuário atualizado!' : 'Usuário criado!', 'success');
             fecharModal();
-            await carregarUsuarios(); // recarrega a lista
+            await carregarUsuarios();
         } else {
-            showToast(result.message || 'Erro ao salvar usuário', 'error');
+            showToast(result.message || result.error || 'Erro ao salvar usuário', 'error');
         }
     } catch (error) {
         console.error('Erro:', error);
@@ -216,15 +250,21 @@ async function salvarUsuario(event) {
 }
 
 async function deletarUsuario(login) {
+    if (!isAdmin) {
+        showToast('Apenas administradores podem excluir usuários', 'error');
+        return;
+    }
+    
     if (!confirm(`Tem certeza que deseja excluir o usuário "${login}"?`)) return;
+    
     try {
-        const response = await fetch(`/api/usuarios/${login}`, { method: 'DELETE' });
+        const response = await fetch(`/api/usuarios/${encodeURIComponent(login)}`, { method: 'DELETE' });
         const result = await response.json();
         if (response.ok && result.success) {
             showToast(`Usuário ${login} excluído!`, 'success');
             await carregarUsuarios();
         } else {
-            showToast(result.error || 'Erro ao excluir', 'error');
+            showToast(result.error || result.message || 'Erro ao excluir', 'error');
         }
     } catch (error) {
         console.error('Erro:', error);
@@ -240,12 +280,15 @@ function fecharModal() {
     currentEditLogin = null;
 }
 
-// Formatar telefone
 function formatPhone(input) {
     let value = input.value.replace(/\D/g, '');
     if (value.length > 11) value = value.slice(0, 11);
-    if (value.length > 2) value = `(${value.slice(0,2)}) ${value.slice(2)}`;
-    if (value.length > 9) value = value.slice(0, 9) + '-' + value.slice(9);
+    if (value.length > 2) {
+        value = `(${value.slice(0,2)}) ${value.slice(2)}`;
+    }
+    if (value.length > 9) {
+        value = value.slice(0, 9) + '-' + value.slice(9);
+    }
     input.value = value;
 }
 

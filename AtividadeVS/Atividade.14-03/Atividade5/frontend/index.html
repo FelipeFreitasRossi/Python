@@ -63,9 +63,19 @@
             <div class="social-login">
                 <p>Ou entre com</p>
                 <div class="social-buttons">
-                    <button class="social-btn google"><i class="fab fa-google"></i></button>
-                    <button class="social-btn github"><i class="fab fa-github"></i></button>
-                    <button class="social-btn microsoft"><i class="fab fa-microsoft"></i></button>
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-link">
+                        <button class="social-btn instagram" onclick="loginSocial('instagram')">
+                            <i class="fab fa-instagram"></i>
+                        </button>
+                    </a>
+                    
+                    <!-- GitHub -->
+                    <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="social-link">
+                        <button class="social-btn github" onclick="loginSocial('github')">
+                            <i class="fab fa-github"></i>
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -76,7 +86,11 @@
         </div>
     </div>
 
+    <div id="toast" class="toast"></div>
+
+    <!-- <script src="/assets/js/modal.js"></script> -->
     <script src="/assets/js/login.js"></script>
     <script src="/assets/js/theme.js"></script>
+    <script src="/assets/js/social-login.js"></script>
 </body>
 </html>

@@ -41,23 +41,17 @@ document.addEventListener('DOMContentLoaded', function() {
     if (form) {
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
-            if (!validateStep(3)) return; // valida o passo 3 (termos)
+            if (!validateStep(3)) return;
             await submitForm();
         });
     }
 
     // Função para mostrar um passo específico e atualizar a barra de progresso
     function showStep(step) {
-        // Oculta todos os steps
         steps.forEach(s => s.classList.remove('active'));
-
-        // Exibe o step atual
         const currentStepEl = document.getElementById(`step${step}`);
-        if (currentStepEl) {
-            currentStepEl.classList.add('active');
-        }
+        if (currentStepEl) currentStepEl.classList.add('active');
 
-        // Atualiza barra de progresso
         progressSteps.forEach((ps, index) => {
             const stepNum = index + 1;
             ps.classList.remove('active', 'completed');
@@ -72,21 +66,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Validação de cada passo
     function validateStep(step) {
         switch(step) {
-            case 1:
-                return validateStep1();
-            case 2:
-                return validateStep2();
-            case 3:
-                return validateStep3();
-            default:
-                return true;
+            case 1: return validateStep1();
+            case 2: return validateStep2();
+            case 3: return validateStep3();
+            default: return true;
         }
     }
 
     function validateStep1() {
         const nome = document.getElementById('nome')?.value.trim();
         const email = document.getElementById('email')?.value.trim();
-
         let isValid = true;
 
         if (!nome) {
@@ -113,7 +102,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const login = document.getElementById('login')?.value.trim();
         const senha = document.getElementById('senha')?.value;
         const confirmar = document.getElementById('confirmar_senha')?.value;
-
         let isValid = true;
 
         if (!login) {
@@ -160,25 +148,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Validação de email
     function isValidEmail(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
-    // Exibe mensagem de erro abaixo do campo
     function showError(fieldId, message) {
         const field = document.getElementById(fieldId);
         if (!field) return;
 
-        // Adiciona classe de erro ao campo
         field.classList.add('error');
+        field.style.borderColor = '#ef4444';
 
-        // Remove mensagem de erro anterior, se existir
         const container = field.closest('.input-group') || field.parentElement;
         const existingError = container.querySelector('.error-message');
         if (existingError) existingError.remove();
 
-        // Cria nova mensagem
         const error = document.createElement('span');
         error.className = 'error-message';
         error.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
@@ -190,14 +174,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!field) return;
 
         field.classList.remove('error');
+        field.style.borderColor = '';
+        
         const container = field.closest('.input-group') || field.parentElement;
         const error = container.querySelector('.error-message');
         if (error) error.remove();
     }
 
-    // Envio do formulário para a API
     async function submitForm() {
-        // Coleta todos os dados dos campos
         const dados = {
             login: document.getElementById('login')?.value.trim() || '',
             senha: document.getElementById('senha')?.value || '',
@@ -212,35 +196,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
         console.log("📤 Enviando dados para cadastro:", dados);
 
-        // Desabilita botão e mostra loading
+        if (!dados.termos) {
+            showError('termos', 'Você precisa aceitar os termos de uso');
+            return;
+        }
+
         const btn = document.querySelector('.submit-btn');
         const originalText = btn.innerHTML;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cadastrando...';
         btn.disabled = true;
 
         try {
-            // Usa caminho relativo (mesma origem) para evitar problemas de CORS
             const response = await fetch('/api/cadastro', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dados)
             });
-
-            // Verifica se a resposta é OK
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
 
             const resultado = await response.json();
             console.log("📥 Resposta do servidor:", resultado);
 
             if (resultado.success) {
-                // Limpa dados salvos localmente
                 localStorage.removeItem('cadastroData');
-                alert('✅ Cadastro realizado com sucesso! Faça o login.');
-                window.location.href = '/'; // redireciona para a página inicial (login)
+                alert('✅ Cadastro realizado com sucesso! Redirecionando para o login...');
+                setTimeout(() => {
+                    window.location.href = '/?cadastro=sucesso';
+                }, 2000);
             } else {
                 alert('❌ Erro: ' + resultado.message);
             }
@@ -248,13 +229,12 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('❌ Erro na requisição:', error);
             alert('❌ Erro ao conectar com o servidor. Verifique se o backend está rodando.');
         } finally {
-            // Restaura botão
             btn.innerHTML = originalText;
             btn.disabled = false;
         }
     }
 
-    // Funções auxiliares (disponíveis globalmente para uso nos eventos inline do HTML)
+    // Funções auxiliares
     window.togglePassword = function(id) {
         const input = document.getElementById(id);
         const icon = event.currentTarget;
@@ -281,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function() {
         input.value = value;
     };
 
-    // Medidor de força da senha (opcional)
+    // Medidor de força da senha
     const senhaInput = document.getElementById('senha');
     if (senhaInput) {
         senhaInput.addEventListener('input', function() {
@@ -304,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Recuperar dados salvos no localStorage (opcional)
+    // Recuperar dados salvos
     const savedData = localStorage.getItem('cadastroData');
     if (savedData) {
         try {
@@ -319,7 +299,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Salvar progresso automaticamente no localStorage
+    // Salvar progresso automaticamente
     const formInputs = document.querySelectorAll('#step1 input, #step2 input, #step1 select, #step2 select');
     formInputs.forEach(input => {
         input.addEventListener('input', function() {

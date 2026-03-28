@@ -71,7 +71,7 @@
 
         <!-- Conteúdo Principal -->
         <main class="main-content">
-            <!-- Header (igual ao Dashboard) -->
+            <!-- Header (mesmo padrão do Dashboard) -->
             <header class="dashboard-header">
                 <div class="header-left">
                     <div class="header-title">
@@ -81,7 +81,6 @@
                 </div>
 
                 <div class="header-right">
-                    <!-- Barra de Pesquisa -->
                     <div class="search-container">
                         <div class="search-wrapper">
                             <div class="search-icon">
@@ -89,10 +88,7 @@
                                     <path d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
                             </div>
-                            <input type="text" 
-                                   id="globalSearch" 
-                                   placeholder="Pesquisar análises, métricas..." 
-                                   autocomplete="off">
+                            <input type="text" id="globalSearch" placeholder="Pesquisar análises, métricas..." autocomplete="off">
                             <div class="search-shortcut">
                                 <kbd>⌘</kbd>
                                 <kbd>K</kbd>
@@ -100,7 +96,6 @@
                         </div>
                     </div>
                     
-                    <!-- Ações do Header -->
                     <div class="header-actions">
                         <div class="action-btn-wrapper">
                             <button class="action-btn notification-btn" id="notificationBtn">
@@ -146,7 +141,6 @@
                                     <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
                             </button>
-                            
                             <div class="user-dropdown" id="userDropdown">
                                 <div class="dropdown-header">
                                     <div class="dropdown-avatar">
@@ -159,25 +153,10 @@
                                     </div>
                                 </div>
                                 <div class="dropdown-menu">
-                                    <a href="#" class="dropdown-item">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M20 21V19C20 16.8 18.2 15 16 15H8C5.8 15 4 16.8 4 19V21M16 7C16 9.2 14.2 11 12 11C9.8 11 8 9.2 8 7C8 4.8 9.8 3 12 3C14.2 3 16 4.8 16 7Z" stroke="currentColor" stroke-width="1.8"/>
-                                        </svg>
-                                        <span>Meu Perfil</span>
-                                    </a>
-                                    <a href="/configuracoes" class="dropdown-item">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M12 2V4M12 20V22M4 12H2M6.343 6.343L4.929 4.929M17.657 6.343L19.071 4.929M22 12H20M18 12C18 15.3 15.3 18 12 18C8.7 18 6 15.3 6 12C6 8.7 8.7 6 12 6C15.3 6 18 8.7 18 12Z" stroke="currentColor" stroke-width="1.8"/>
-                                        </svg>
-                                        <span>Configurações</span>
-                                    </a>
+                                    <a href="#" class="dropdown-item"><i class="fas fa-user"></i> Meu Perfil</a>
+                                    <a href="/configuracoes" class="dropdown-item"><i class="fas fa-cog"></i> Configurações</a>
                                     <div class="dropdown-divider"></div>
-                                    <button class="dropdown-item logout" onclick="logout()">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M9 21H5C4.5 21 4 20.5 4 20V4C4 3.5 4.5 3 5 3H9M16 17L21 12L16 7M21 12H9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                                        </svg>
-                                        <span>Sair</span>
-                                    </button>
+                                    <button class="dropdown-item logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</button>
                                 </div>
                             </div>
                         </div>
@@ -254,7 +233,7 @@
                 </div>
             </div>
 
-            <!-- Principais Métricas por Departamento (versão melhorada) -->
+            <!-- Principais Métricas por Departamento (com botão de exportação) -->
             <div class="dept-metrics-card">
                 <div class="card-header">
                     <div class="header-left">
@@ -266,8 +245,29 @@
                             <p>Análise comparativa de atividades e engajamento</p>
                         </div>
                     </div>
-                    <div class="view-all">
-                        <i class="fas fa-download"></i> Exportar
+                    <div class="export-dropdown">
+                        <button class="btn-export" id="btnExport">
+                            <i class="fas fa-download"></i> Exportar
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="export-menu" id="exportMenu">
+                            <button onclick="exportarDados('csv')">
+                                <i class="fas fa-file-csv"></i> Exportar como CSV
+                            </button>
+                            <button onclick="exportarDados('json')">
+                                <i class="fas fa-file-code"></i> Exportar como JSON
+                            </button>
+                            <button onclick="exportarDados('excel')">
+                                <i class="fas fa-file-excel"></i> Exportar como Excel (XLSX)
+                            </button>
+                            <button onclick="exportarDados('pdf')">
+                                <i class="fas fa-file-pdf"></i> Exportar como PDF
+                            </button>
+                            <div class="export-divider"></div>
+                            <button onclick="exportarGraficos()">
+                                <i class="fas fa-chart-line"></i> Exportar gráficos como imagem
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -287,7 +287,7 @@
     <div id="toast" class="toast"></div>
     
     <script src="/assets/js/theme.js"></script>
-    <script src="/assets/js/analises.js"></script>
     <script src="/assets/js/header.js"></script>
+    <script src="/assets/js/analises.js"></script>
 </body>
 </html>

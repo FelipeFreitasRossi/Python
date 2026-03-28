@@ -6,7 +6,8 @@
         "telefone": "(16) 9961-67381",
         "departamento": "TI",
         "data_criacao": "2026-03-27 16:20:21.686801",
-        "ultimo_acesso": "2026-03-28 00:00:16.740324"
+        "ultimo_acesso": "2026-03-28 10:55:06.748045",
+        "avatar": "/uploads/Felipe_20260328105550.jpeg"
     },
     "admin": {
         "senha": "...",
@@ -28,5 +29,14 @@
         "email": "maria@email.com",
         "departamento": "Marketing",
         "ultimo_acesso": "2025-03-25T09:15:00"
+    },
+    "teste123": {
+        "senha": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+        "nome": "Rafeael",
+        "email": "rafael@gmail.com",
+        "telefone": "(16) 6688-77551",
+        "departamento": "TI",
+        "data_criacao": "2026-03-28 11:59:24.475583",
+        "ultimo_acesso": "2026-03-28 11:59:54.943477"
     }
 }

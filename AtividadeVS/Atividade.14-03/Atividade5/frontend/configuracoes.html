@@ -4,47 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configurações - SecureSystem</title>
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
     <link rel="stylesheet" href="/assets/css/configuracoes.css">
-    <link rel="stylesheet" href="assets/css/theme.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="settings-container">
-        <!-- Sidebar de Configurações -->
+    <div class="dashboard">
+        <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo">
-                <i class="fas fa-shield-alt"></i>
+                <div class="logo-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
                 <span>SecureSystem</span>
             </div>
 
             <nav class="nav-menu">
-                <a href="/dashboard" class="nav-item {% if request.path == '/dashboard' %}active{% endif %}">
-                    <i class="fas fa-home"></i><span>Dashboard</span>
+                <a href="/dashboard" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
                 </a>
-                <a href="/analises" class="nav-item {% if request.path == '/analises' %}active{% endif %}">
-                    <i class="fas fa-chart-line"></i><span>Análises</span>
+                <a href="/analises" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Análises</span>
                 </a>
-                <a href="/usuarios" class="nav-item {% if request.path == '/usuarios' %}active{% endif %}">
-                    <i class="fas fa-users"></i><span>Usuários</span>
+                <a href="/usuarios" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Usuários</span>
                 </a>
-                <a href="/configuracoes" class="nav-item {% if request.path == '/configuracoes' %}active{% endif %}">
-                    <i class="fas fa-cog"></i><span>Configurações</span>
+                <a href="/tarefas" class="nav-item">
+                    <i class="fas fa-tasks"></i>
+                    <span>Minhas Tarefas</span>
                 </a>
-                <a href="/relatorios" class="nav-item {% if request.path == '/relatorios' %}active{% endif %}">
-                    <i class="fas fa-file-alt"></i><span>Relatórios</span>
+                <a href="/configuracoes" class="nav-item active">
+                    <i class="fas fa-cog"></i>
+                    <span>Configurações</span>
                 </a>
-                <a href="/agenda" class="nav-item {% if request.path == '/agenda' %}active{% endif %}">
-                    <i class="fas fa-calendar"></i><span>Agenda</span>
+                <a href="/relatorios" class="nav-item">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Relatórios</span>
+                </a>
+                <a href="/agenda" class="nav-item">
+                    <i class="fas fa-calendar"></i>
+                    <span>Agenda</span>
                 </a>
             </nav>
 
             <div class="sidebar-footer">
                 <div class="user-info">
-                    <img src="https://ui-avatars.com/api/?name={{ session.user }}&background=667eea&color=fff&size=40" alt="Avatar">
-                    <div>
+                    <div class="user-avatar">
+                        <img src="https://ui-avatars.com/api/?name={{ session.user }}&background=667eea&color=fff&size=40&bold=true" alt="Avatar">
+                        <div class="online-status"></div>
+                    </div>
+                    <div class="user-details">
                         <span class="user-name" id="sidebarUserName">{{ session.user }}</span>
-                        <span class="user-role">Usuário</span>
+                        <span class="user-role">Administrador</span>
                     </div>
                 </div>
                 <button class="logout-btn" onclick="logout()">
@@ -54,526 +70,617 @@
         </aside>
 
         <!-- Conteúdo Principal -->
-        <main class="settings-content">
-            <!-- Seção Perfil -->
-            <section id="perfil" class="settings-section active">
-                <div class="section-header">
-                    <h2>Perfil</h2>
-                    <p>Gerencie suas informações pessoais</p>
+        <main class="main-content">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <div class="header-title">
+                        <h1>Configurações</h1>
+                        <p>Personalize sua experiência e gerencie o sistema</p>
+                    </div>
                 </div>
 
-                <div class="settings-card">
-                    <div class="profile-header">
-                        <div class="profile-avatar">
-                            <img src="https://ui-avatars.com/api/?name=Admin&background=667eea&color=fff&size=100" alt="Avatar" id="profileAvatar">
-                            <button class="change-avatar" onclick="changeAvatar()">
-                                <i class="fas fa-camera"></i>
-                            </button>
-                        </div>
-                        <div class="profile-info">
-                            <h3 id="profileName">Admin</h3>
-                            <p id="profileEmail">admin@sistema.com</p>
-                            <span class="profile-badge">Administrador</span>
+                <div class="header-right">
+                    <div class="search-container">
+                        <div class="search-wrapper">
+                            <div class="search-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <input type="text" id="searchConfig" placeholder="Buscar configurações..." autocomplete="off">
+                            <div class="search-shortcut">
+                                <kbd>⌘</kbd>
+                                <kbd>K</kbd>
+                            </div>
                         </div>
                     </div>
-
-                    <form id="profileForm" class="settings-form">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="nome">
-                                    <i class="fas fa-user"></i>
-                                    Nome Completo
-                                </label>
-                                <input type="text" id="nome" name="nome" value="Administrador">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="email">
-                                    <i class="fas fa-envelope"></i>
-                                    E-mail
-                                </label>
-                                <input type="email" id="email" name="email" value="admin@sistema.com">
-                            </div>
+                    
+                    <div class="header-actions">
+                        <div class="action-btn-wrapper">
+                            <button class="action-btn notification-btn" id="notificationBtn">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2C10.6868 2 9.38642 2.25866 8.17317 2.7612C6.95991 3.26375 5.85752 4.00035 4.92893 4.92893C3.05357 6.8043 2 9.34784 2 12C2 14.6522 3.05357 17.1957 4.92893 19.0711C5.85752 19.9997 6.95991 20.7362 8.17317 21.2388C9.38642 21.7413 10.6868 22 12 22C14.6522 22 17.1957 20.9464 19.0711 19.0711C20.9464 17.1957 22 14.6522 22 12C22 9.34784 20.9464 6.8043 19.0711 4.92893C18.1425 4.00035 17.0401 3.26375 15.8268 2.7612C14.6136 2.25866 13.3132 2 12 2Z" stroke="currentColor" stroke-width="1.8"/>
+                                    <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                </svg>
+                                <span class="badge">3</span>
+                            </button>
                         </div>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="telefone">
-                                    <i class="fas fa-phone"></i>
-                                    Telefone
-                                </label>
-                                <input type="tel" id="telefone" name="telefone" value="(11) 99999-9999">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="departamento">
-                                    <i class="fas fa-building"></i>
-                                    Departamento
-                                </label>
-                                <select id="departamento" name="departamento">
-                                    <option value="TI" selected>TI</option>
-                                    <option value="Vendas">Vendas</option>
-                                    <option value="Marketing">Marketing</option>
-                                    <option value="RH">RH</option>
-                                </select>
-                            </div>
+                        <div class="action-btn-wrapper">
+                            <button class="action-btn settings-btn" id="settingsBtn">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" stroke-width="1.8"/>
+                                    <path d="M19.4 15.05L18.3 15.95C18.1 16.1 18 16.35 18 16.6V18C18 18.55 17.55 19 17 19H15.6C15.35 19 15.1 19.1 14.95 19.3L14.05 20.4C13.8 20.75 13.4 21 13 21H11C10.6 21 10.2 20.75 9.95 20.4L9.05 19.3C8.9 19.1 8.65 19 8.4 19H7C6.45 19 6 18.55 6 18V16.6C6 16.35 5.9 16.1 5.7 15.95L4.6 15.05C4.25 14.8 4 14.4 4 14V10C4 9.6 4.25 9.2 4.6 8.95L5.7 8.05C5.9 7.9 6 7.65 6 7.4V6C6 5.45 6.45 5 7 5H8.4C8.65 5 8.9 4.9 9.05 4.7L9.95 3.6C10.2 3.25 10.6 3 11 3H13C13.4 3 13.8 3.25 14.05 3.6L14.95 4.7C15.1 4.9 15.35 5 15.6 5H17C17.55 5 18 5.45 18 6V7.4C18 7.65 18.1 7.9 18.3 8.05L19.4 8.95C19.75 9.2 20 9.6 20 10V14C20 14.4 19.75 14.8 19.4 15.05Z" stroke="currentColor" stroke-width="1.8"/>
+                                </svg>
+                            </button>
                         </div>
 
-                        <div class="form-group">
-                            <label for="bio">
-                                <i class="fas fa-align-left"></i>
-                                Biografia
-                            </label>
-                            <textarea id="bio" name="bio" rows="4">Administrador do sistema com experiência em segurança e desenvolvimento.</textarea>
+                        <div class="action-btn-wrapper">
+                            <button class="action-btn theme-toggle" id="themeToggle">
+                                <svg class="theme-icon-light" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 3V4M12 20V21M21 12H20M4 12H3M18.364 5.636L17.657 6.343M6.343 17.657L5.636 18.364M18.364 18.364L17.657 17.657M6.343 6.343L5.636 5.636M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                </svg>
+                                <svg class="theme-icon-dark" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                </svg>
+                            </button>
                         </div>
 
-                        <button type="submit" class="save-btn">
-                            <i class="fas fa-check"></i>
-                            Salvar alterações
-                        </button>
-                    </form>
+                        <div class="user-menu-container">
+                            <button class="user-avatar-btn" id="userMenuBtn">
+                                <div class="avatar-wrapper">
+                                    <img src="https://ui-avatars.com/api/?name={{ session.user }}&background=667eea&color=fff&size=44&bold=true&rounded=true" alt="Avatar">
+                                    <span class="online-dot"></span>
+                                </div>
+                                <div class="user-info-mini">
+                                    <span class="user-name-mini" id="userNameMini">{{ session.user }}</span>
+                                    <span class="user-role-mini">Administrador</span>
+                                </div>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </button>
+                            <div class="user-dropdown" id="userDropdown">
+                                <div class="dropdown-header">
+                                    <div class="dropdown-avatar">
+                                        <img src="https://ui-avatars.com/api/?name={{ session.user }}&background=667eea&color=fff&size=48&bold=true" alt="Avatar">
+                                    </div>
+                                    <div class="dropdown-info">
+                                        <h4 id="dropdownUserName">{{ session.user }}</h4>
+                                        <p>Administrador</p>
+                                        <span class="dropdown-email">{{ session.user }}@sistema.com</span>
+                                    </div>
+                                </div>
+                                <div class="dropdown-menu">
+                                    <a href="#" class="dropdown-item"><i class="fas fa-user"></i> Meu Perfil</a>
+                                    <a href="/configuracoes" class="dropdown-item"><i class="fas fa-cog"></i> Configurações</a>
+                                    <div class="dropdown-divider"></div>
+                                    <button class="dropdown-item logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </section>
+            </header>
 
-            <!-- Seção Conta e Segurança -->
-            <section id="conta" class="settings-section">
-                <div class="section-header">
-                    <h2>Conta e Segurança</h2>
-                    <p>Gerencie sua senha e configurações de segurança</p>
+            <!-- Tabs de Configurações -->
+            <div class="settings-tabs">
+                <button class="tab-btn active" data-tab="perfil">
+                    <i class="fas fa-user"></i> Perfil
+                </button>
+                <button class="tab-btn" data-tab="seguranca">
+                    <i class="fas fa-shield-alt"></i> Segurança
+                </button>
+                <button class="tab-btn" data-tab="notificacoes">
+                    <i class="fas fa-bell"></i> Notificações
+                </button>
+                <button class="tab-btn" data-tab="aparencia">
+                    <i class="fas fa-palette"></i> Aparência
+                </button>
+                <button class="tab-btn" data-tab="sistema">
+                    <i class="fas fa-database"></i> Sistema
+                </button>
+                <button class="tab-btn" data-tab="backup">
+                    <i class="fas fa-cloud-upload-alt"></i> Backup
+                </button>
+            </div>
+
+            <!-- Conteúdo das Tabs -->
+            <div class="settings-content">
+                <!-- Tab Perfil -->
+                <div class="settings-panel active" id="tab-perfil">
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h3><i class="fas fa-user-circle"></i> Informações Pessoais</h3>
+                            <p>Atualize seus dados de perfil</p>
+                        </div>
+                        <form id="profileForm" class="settings-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="nomeCompleto">Nome Completo</label>
+                                    <input type="text" id="nomeCompleto" name="nome" value="{{ session.user }}" placeholder="Seu nome completo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">E-mail</label>
+                                    <input type="email" id="email" name="email" placeholder="seu@email.com">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="telefone">Telefone</label>
+                                    <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999" oninput="formatPhone(this)">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cargo">Cargo / Função</label>
+                                    <input type="text" id="cargo" name="cargo" placeholder="Administrador">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="bio">Biografia</label>
+                                <textarea id="bio" name="bio" rows="3" placeholder="Conte um pouco sobre você..."></textarea>
+                            </div>
+                            <div class="avatar-upload">
+                                <label>Foto de Perfil</label>
+                                <div class="avatar-preview">
+                                    <img src="https://ui-avatars.com/api/?name={{ session.user }}&background=667eea&color=fff&size=80&bold=true" alt="Avatar" id="avatarPreview">
+                                    <div class="avatar-actions">
+                                        <button type="button" class="btn-secondary-small" onclick="alterarAvatar()">
+                                            <i class="fas fa-camera"></i> Alterar
+                                        </button>
+                                        <button type="button" class="btn-secondary-small" onclick="removerAvatar()">
+                                            <i class="fas fa-trash"></i> Remover
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Salvar Alterações</button>
+                                <button type="button" class="btn-secondary" onclick="resetForm('profileForm')">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
-                <div class="settings-card">
-                    <h3>Alterar Senha</h3>
-                    <form id="passwordForm" class="settings-form">
-                        <div class="form-group">
-                            <label for="senha_atual">
-                                <i class="fas fa-lock"></i>
-                                Senha Atual
-                            </label>
-                            <div class="password-input">
-                                <input type="password" id="senha_atual" name="senha_atual">
-                                <i class="fas fa-eye toggle-password" onclick="togglePassword('senha_atual')"></i>
-                            </div>
+                <!-- Tab Segurança -->
+                <div class="settings-panel" id="tab-seguranca">
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h3><i class="fas fa-lock"></i> Alterar Senha</h3>
+                            <p>Mantenha sua conta segura com uma senha forte</p>
                         </div>
-
-                        <div class="form-row">
+                        <form id="passwordForm" class="settings-form">
                             <div class="form-group">
-                                <label for="nova_senha">
-                                    <i class="fas fa-lock"></i>
-                                    Nova Senha
-                                </label>
+                                <label for="senhaAtual">Senha Atual</label>
                                 <div class="password-input">
-                                    <input type="password" id="nova_senha" name="nova_senha">
-                                    <i class="fas fa-eye toggle-password" onclick="togglePassword('nova_senha')"></i>
+                                    <input type="password" id="senhaAtual" name="senhaAtual" placeholder="Digite sua senha atual">
+                                    <i class="fas fa-eye toggle-password" onclick="togglePassword('senhaAtual')"></i>
                                 </div>
                             </div>
-
                             <div class="form-group">
-                                <label for="confirmar_senha">
-                                    <i class="fas fa-lock"></i>
-                                    Confirmar Nova Senha
-                                </label>
+                                <label for="novaSenha">Nova Senha</label>
                                 <div class="password-input">
-                                    <input type="password" id="confirmar_senha" name="confirmar_senha">
-                                    <i class="fas fa-eye toggle-password" onclick="togglePassword('confirmar_senha')"></i>
+                                    <input type="password" id="novaSenha" name="novaSenha" placeholder="Digite a nova senha">
+                                    <i class="fas fa-eye toggle-password" onclick="togglePassword('novaSenha')"></i>
+                                </div>
+                                <div class="password-strength-meter">
+                                    <div class="strength-bar"></div>
+                                    <div class="strength-bar"></div>
+                                    <div class="strength-bar"></div>
+                                    <div class="strength-bar"></div>
+                                    <span class="strength-text"></span>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="password-requirements">
-                            <p>A senha deve conter:</p>
-                            <ul>
-                                <li class="requirement" id="req-length">✓ Mínimo 8 caracteres</li>
-                                <li class="requirement" id="req-number">✓ Pelo menos 1 número</li>
-                                <li class="requirement" id="req-uppercase">✓ Pelo menos 1 letra maiúscula</li>
-                                <li class="requirement" id="req-special">✓ Pelo menos 1 caractere especial</li>
-                            </ul>
-                        </div>
-
-                        <button type="submit" class="save-btn">
-                            <i class="fas fa-check"></i>
-                            Alterar senha
-                        </button>
-                    </form>
-                </div>
-
-                <div class="settings-card">
-                    <h3>Autenticação em Dois Fatores (2FA)</h3>
-                    <div class="two-factor">
-                        <div class="two-factor-info">
-                            <i class="fas fa-shield-alt"></i>
-                            <div>
-                                <h4>Proteção adicional para sua conta</h4>
-                                <p>Adicione uma camada extra de segurança com 2FA</p>
+                            <div class="form-group">
+                                <label for="confirmarSenha">Confirmar Nova Senha</label>
+                                <div class="password-input">
+                                    <input type="password" id="confirmarSenha" name="confirmarSenha" placeholder="Confirme a nova senha">
+                                    <i class="fas fa-eye toggle-password" onclick="togglePassword('confirmarSenha')"></i>
+                                </div>
                             </div>
-                        </div>
-                        <label class="switch">
-                            <input type="checkbox" id="twoFactor" onchange="toggle2FA(this)">
-                            <span class="slider"></span>
-                        </label>
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Alterar Senha</button>
+                                <button type="button" class="btn-secondary" onclick="resetForm('passwordForm')">Cancelar</button>
+                            </div>
+                        </form>
                     </div>
 
-                    <div id="qrCodeSection" style="display: none;">
-                        <h4>Configure seu aplicativo 2FA</h4>
-                        <p>Escaneie o QR Code com Google Authenticator ou similar</p>
-                        <div class="qr-code">
-                            <!-- QR Code será gerado aqui -->
-                            <div class="qr-placeholder">
-                                <i class="fas fa-qrcode"></i>
-                            </div>
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h3><i class="fas fa-mobile-alt"></i> Autenticação em Dois Fatores (2FA)</h3>
+                            <p>Adicione uma camada extra de segurança</p>
                         </div>
-                        <p class="backup-code">Código de backup: XXXX-XXXX-XXXX-XXXX</p>
-                    </div>
-                </div>
-
-                <div class="settings-card">
-                    <h3>Sessões Ativas</h3>
-                    <div class="sessions-list">
-                        <div class="session-item current">
-                            <div class="session-info">
-                                <i class="fas fa-laptop"></i>
+                        <div class="twofa-status">
+                            <div class="status-info">
+                                <i class="fas fa-shield-alt"></i>
                                 <div>
-                                    <h4>Este dispositivo</h4>
-                                    <p>Chrome • São Paulo • Ativo agora</p>
+                                    <strong>Status:</strong> <span id="twofaStatus" class="status-disabled">Desativado</span>
                                 </div>
                             </div>
-                            <span class="session-badge">Atual</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="twofaToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
                         </div>
-
-                        <div class="session-item">
-                            <div class="session-info">
-                                <i class="fas fa-mobile-alt"></i>
-                                <div>
-                                    <h4>iPhone 13</h4>
-                                    <p>Safari • São Paulo • Há 2 dias</p>
+                        <div id="twofaSetup" style="display: none;">
+                            <div class="twofa-setup">
+                                <p>Escaneie o QR Code com seu aplicativo autenticador (Google Authenticator, Authy, etc.)</p>
+                                <div class="qr-code-placeholder">
+                                    <i class="fas fa-qrcode"></i>
+                                    <span>QR Code Simulado</span>
                                 </div>
-                            </div>
-                            <button class="revoke-btn" onclick="revokeSession(this)">Revogar</button>
-                        </div>
-                    </div>
-                    <button class="revoke-all-btn" onclick="revokeAllSessions()">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Revogar todas as outras sessões
-                    </button>
-                </div>
-            </section>
-
-            <!-- Seção Notificações -->
-            <section id="notificacoes" class="settings-section">
-                <div class="section-header">
-                    <h2>Notificações</h2>
-                    <p>Configure como deseja receber alertas</p>
-                </div>
-
-                <div class="settings-card">
-                    <h3>Canais de Notificação</h3>
-                    
-                    <div class="notification-option">
-                        <div class="option-info">
-                            <i class="fas fa-envelope"></i>
-                            <div>
-                                <h4>E-mail</h4>
-                                <p>Receba notificações por e-mail</p>
-                            </div>
-                        </div>
-                        <label class="switch">
-                            <input type="checkbox" id="emailNotifications" checked>
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-
-                    <div class="notification-option">
-                        <div class="option-info">
-                            <i class="fas fa-bell"></i>
-                            <div>
-                                <h4>Notificações Push</h4>
-                                <p>Alertas no navegador</p>
-                            </div>
-                        </div>
-                        <label class="switch">
-                            <input type="checkbox" id="pushNotifications" checked>
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-
-                    <div class="notification-option">
-                        <div class="option-info">
-                            <i class="fas fa-sms"></i>
-                            <div>
-                                <h4>SMS</h4>
-                                <p>Alertas via mensagem de texto</p>
-                            </div>
-                        </div>
-                        <label class="switch">
-                            <input type="checkbox" id="smsNotifications">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="settings-card">
-                    <h3>Tipos de Notificação</h3>
-                    
-                    <div class="notification-types">
-                        <label class="checkbox-label">
-                            <input type="checkbox" checked>
-                            <span>Novos acessos à conta</span>
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" checked>
-                            <span>Alterações de segurança</span>
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" checked>
-                            <span>Atualizações do sistema</span>
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" checked>
-                            <span>Relatórios disponíveis</span>
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox">
-                            <span>Promoções e novidades</span>
-                        </label>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Seção Aparência -->
-            <section id="aparecia" class="settings-section">
-                <div class="section-header">
-                    <h2>Aparência</h2>
-                    <p>Personalize a aparência do sistema</p>
-                </div>
-
-                <div class="settings-card">
-                    <h3>Tema</h3>
-                    
-                    <div class="theme-options">
-                        <div class="theme-option" onclick="setTheme('light')">
-                            <div class="theme-preview light"></div>
-                            <span>Claro</span>
-                        </div>
-                        <div class="theme-option active" onclick="setTheme('dark')">
-                            <div class="theme-preview dark"></div>
-                            <span>Escuro</span>
-                        </div>
-                        <div class="theme-option" onclick="setTheme('auto')">
-                            <div class="theme-preview auto"></div>
-                            <span>Automático</span>
-                        </div>
-                    </div>
-
-                    <h3>Cor Primária</h3>
-                    <div class="color-options">
-                        <div class="color-option" style="background: #667eea" onclick="setPrimaryColor('#667eea')"></div>
-                        <div class="color-option" style="background: #10b981" onclick="setPrimaryColor('#10b981')"></div>
-                        <div class="color-option" style="background: #f59e0b" onclick="setPrimaryColor('#f59e0b')"></div>
-                        <div class="color-option" style="background: #ef4444" onclick="setPrimaryColor('#ef4444')"></div>
-                        <div class="color-option" style="background: #8b5cf6" onclick="setPrimaryColor('#8b5cf6')"></div>
-                    </div>
-
-                    <h3>Idioma</h3>
-                    <select class="language-select">
-                        <option value="pt-BR" selected>Português (Brasil)</option>
-                        <option value="en-US">English (US)</option>
-                        <option value="es-ES">Español</option>
-                    </select>
-                </div>
-            </section>
-
-            <!-- Seção Sistema -->
-            <section id="sistema" class="settings-section">
-                <div class="section-header">
-                    <h2>Sistema</h2>
-                    <p>Configurações gerais do sistema</p>
-                </div>
-
-                <div class="settings-card">
-                    <h3>Informações do Sistema</h3>
-                    
-                    <div class="system-info">
-                        <div class="info-row">
-                            <span>Versão</span>
-                            <span class="info-value">1.0.0</span>
-                        </div>
-                        <div class="info-row">
-                            <span>Última atualização</span>
-                            <span class="info-value">15/03/2024</span>
-                        </div>
-                        <div class="info-row">
-                            <span>Ambiente</span>
-                            <span class="info-value">Produção</span>
-                        </div>
-                        <div class="info-row">
-                            <span>Usuários ativos</span>
-                            <span class="info-value">1,234</span>
-                        </div>
-                    </div>
-
-                    <h3>Configurações de Backup</h3>
-                    <div class="backup-settings">
-                        <label class="checkbox-label">
-                            <input type="checkbox" checked>
-                            <span>Backup automático diário</span>
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" checked>
-                            <span>Compressão de dados</span>
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox">
-                            <span>Backup em nuvem</span>
-                        </label>
-                    </div>
-
-                    <button class="backup-now-btn" onclick="createBackup()">
-                        <i class="fas fa-database"></i>
-                        Fazer backup agora
-                    </button>
-                </div>
-            </section>
-
-            <!-- Seção API -->
-            <section id="api" class="settings-section">
-                <div class="section-header">
-                    <h2>API e Integrações</h2>
-                    <p>Gerencie suas chaves de API e integrações</p>
-                </div>
-
-                <div class="settings-card">
-                    <h3>Chaves de API</h3>
-                    
-                    <div class="api-keys">
-                        <div class="api-key-item">
-                            <div>
-                                <h4>Chave Principal</h4>
-                                <code>sk_live_••••••••••••••••</code>
-                            </div>
-                            <div class="api-actions">
-                                <button class="api-btn" onclick="copyApiKey('primary')">
-                                    <i class="fas fa-copy"></i>
-                                </button>
-                                <button class="api-btn" onclick="regenerateApiKey('primary')">
-                                    <i class="fas fa-sync-alt"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="api-key-item">
-                            <div>
-                                <h4>Chave de Teste</h4>
-                                <code>sk_test_••••••••••••••••</code>
-                            </div>
-                            <div class="api-actions">
-                                <button class="api-btn" onclick="copyApiKey('test')">
-                                    <i class="fas fa-copy"></i>
-                                </button>
-                                <button class="api-btn" onclick="regenerateApiKey('test')">
-                                    <i class="fas fa-sync-alt"></i>
-                                </button>
+                                <p class="backup-code">Código de backup: <strong>XXXX-XXXX-XXXX-XXXX</strong></p>
+                                <button class="btn-primary" onclick="ativar2FA()">Ativar 2FA</button>
                             </div>
                         </div>
                     </div>
 
-                    <button class="generate-key-btn" onclick="generateNewKey()">
-                        <i class="fas fa-plus"></i>
-                        Gerar nova chave
-                    </button>
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h3><i class="fas fa-laptop"></i> Sessões Ativas</h3>
+                            <p>Gerencie dispositivos conectados à sua conta</p>
+                        </div>
+                        <div class="sessions-list" id="sessionsList">
+                            <div class="session-item current">
+                                <div class="session-device">
+                                    <i class="fas fa-laptop"></i>
+                                    <div>
+                                        <strong>Este dispositivo</strong>
+                                        <span>Chrome • Windows • São Paulo</span>
+                                    </div>
+                                </div>
+                                <span class="session-badge">Atual</span>
+                            </div>
+                            <div class="session-item">
+                                <div class="session-device">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <div>
+                                        <strong>iPhone 13</strong>
+                                        <span>Safari • São Paulo • Último acesso: 2 dias atrás</span>
+                                    </div>
+                                </div>
+                                <button class="btn-secondary-small" onclick="revogarSessao(this)">Revogar</button>
+                            </div>
+                        </div>
+                        <button class="btn-secondary" onclick="revogarTodasSessoes()">Revogar todas as outras sessões</button>
+                    </div>
                 </div>
 
-                <div class="settings-card">
-                    <h3>Webhooks</h3>
-                    
-                    <div class="webhook-list">
-                        <div class="webhook-item">
-                            <input type="url" placeholder="https://exemplo.com/webhook" value="https://api.exemplo.com/webhook">
-                            <button class="webhook-test" onclick="testWebhook(this)">
-                                <i class="fas fa-paper-plane"></i>
-                            </button>
-                            <button class="webhook-delete" onclick="deleteWebhook(this)">
-                                <i class="fas fa-trash"></i>
-                            </button>
+                <!-- Tab Notificações -->
+                <div class="settings-panel" id="tab-notificacoes">
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h3><i class="fas fa-envelope"></i> Notificações por E-mail</h3>
+                            <p>Configure quais e-mails deseja receber</p>
+                        </div>
+                        <div class="notification-options">
+                            <div class="notification-option">
+                                <div class="option-info">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    <div>
+                                        <strong>Login em novo dispositivo</strong>
+                                        <p>Receba um alerta quando um novo dispositivo acessar sua conta</p>
+                                    </div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="notifLogin" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="notification-option">
+                                <div class="option-info">
+                                    <i class="fas fa-tasks"></i>
+                                    <div>
+                                        <strong>Lembretes de tarefas</strong>
+                                        <p>Receba lembretes sobre tarefas pendentes</p>
+                                    </div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="notifTarefas" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="notification-option">
+                                <div class="option-info">
+                                    <i class="fas fa-chart-line"></i>
+                                    <div>
+                                        <strong>Relatórios semanais</strong>
+                                        <p>Receba relatórios de desempenho do sistema</p>
+                                    </div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="notifRelatorios">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
                         </div>
                     </div>
 
-                    <button class="add-webhook-btn" onclick="addWebhook()">
-                        <i class="fas fa-plus"></i>
-                        Adicionar webhook
-                    </button>
-                </div>
-            </section>
-
-            <!-- Seção Logs -->
-            <section id="logs" class="settings-section">
-                <div class="section-header">
-                    <h2>Logs e Auditoria</h2>
-                    <p>Visualize logs de atividades e auditoria</p>
-                </div>
-
-                <div class="settings-card">
-                    <div class="log-controls">
-                        <select class="log-filter">
-                            <option>Todos os tipos</option>
-                            <option>Login</option>
-                            <option>Configurações</option>
-                            <option>Segurança</option>
-                            <option>Erros</option>
-                        </select>
-                        
-                        <input type="date" class="log-date" value="2024-03-15">
-                        
-                        <button class="export-logs-btn" onclick="exportLogs()">
-                            <i class="fas fa-download"></i>
-                            Exportar logs
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h3><i class="fas fa-bell"></i> Notificações Push</h3>
+                            <p>Notificações em tempo real no navegador</p>
+                        </div>
+                        <div class="notification-options">
+                            <div class="notification-option">
+                                <div class="option-info">
+                                    <i class="fas fa-comment"></i>
+                                    <div>
+                                        <strong>Mensagens do sistema</strong>
+                                        <p>Receba mensagens importantes do sistema</p>
+                                    </div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="pushMessages" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="notification-option">
+                                <div class="option-info">
+                                    <i class="fas fa-tag"></i>
+                                    <div>
+                                        <strong>Promoções e novidades</strong>
+                                        <p>Receba atualizações sobre novos recursos</p>
+                                    </div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="pushPromocoes">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <button class="btn-primary" onclick="testarNotificacao()">
+                            <i class="fas fa-bell"></i> Testar Notificação
                         </button>
                     </div>
+                </div>
 
-                    <div class="logs-table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Data/Hora</th>
-                                    <th>Tipo</th>
-                                    <th>Usuário</th>
-                                    <th>Ação</th>
-                                    <th>IP</th>
-                                </tr>
-                            </thead>
-                            <tbody id="logsTableBody">
-                                <tr>
-                                    <td>15/03/2024 09:30</td>
-                                    <td><span class="log-badge login">Login</span></td>
-                                    <td>admin</td>
-                                    <td>Login realizado com sucesso</td>
-                                    <td>192.168.1.100</td>
-                                </tr>
-                                <tr>
-                                    <td>15/03/2024 09:25</td>
-                                    <td><span class="log-badge config">Config</span></td>
-                                    <td>admin</td>
-                                    <td>Alterou configurações de segurança</td>
-                                    <td>192.168.1.100</td>
-                                </tr>
-                                <tr>
-                                    <td>15/03/2024 09:20</td>
-                                    <td><span class="log-badge security">Segurança</span></td>
-                                    <td>sistema</td>
-                                    <td>Backup automático concluído</td>
-                                    <td>-</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <!-- Tab Aparência -->
+                <div class="settings-panel" id="tab-aparencia">
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h3><i class="fas fa-palette"></i> Tema</h3>
+                            <p>Escolha o tema do sistema</p>
+                        </div>
+                        <div class="theme-options">
+                            <div class="theme-option" data-theme="light" onclick="setTheme('light')">
+                                <div class="theme-preview light"></div>
+                                <span>Claro</span>
+                            </div>
+                            <div class="theme-option" data-theme="dark" onclick="setTheme('dark')">
+                                <div class="theme-preview dark"></div>
+                                <span>Escuro</span>
+                            </div>
+                            <div class="theme-option" data-theme="auto" onclick="setTheme('auto')">
+                                <div class="theme-preview auto"></div>
+                                <span>Automático</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h3><i class="fas fa-font"></i> Personalização</h3>
+                            <p>Personalize a aparência do sistema</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="fontSize">Tamanho da Fonte</label>
+                            <select id="fontSize" onchange="setFontSize(this.value)">
+                                <option value="small">Pequeno</option>
+                                <option value="medium" selected>Médio</option>
+                                <option value="large">Grande</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="compactMode">Modo Compacto</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="compactMode" onchange="toggleCompactMode(this.checked)">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h3><i class="fas fa-language"></i> Idioma</h3>
+                            <p>Selecione o idioma da interface</p>
+                        </div>
+                        <div class="form-group">
+                            <select id="language" onchange="setLanguage(this.value)">
+                                <option value="pt-BR" selected>Português (Brasil)</option>
+                                <option value="en-US">English (US)</option>
+                                <option value="es-ES">Español</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-            </section>
+
+                <!-- Tab Sistema -->
+                <div class="settings-panel" id="tab-sistema">
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h3><i class="fas fa-info-circle"></i> Informações do Sistema</h3>
+                            <p>Versões e detalhes técnicos</p>
+                        </div>
+                        <div class="system-info">
+                            <div class="info-row">
+                                <span>Versão do Sistema</span>
+                                <span>1.0.0</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Última atualização</span>
+                                <span id="lastUpdate">15/03/2025</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Ambiente</span>
+                                <span>Produção</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Framework Backend</span>
+                                <span>Flask 2.3.3</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Banco de Dados</span>
+                                <span>JSON Storage</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h3><i class="fas fa-chart-simple"></i> Estatísticas do Sistema</h3>
+                            <p>Métricas de uso e desempenho</p>
+                        </div>
+                        <div class="stats-info">
+                            <div class="stat-item">
+                                <span class="stat-label">Total de Usuários</span>
+                                <span class="stat-value" id="statTotalUsers">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Tarefas Criadas</span>
+                                <span class="stat-value" id="statTotalTasks">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Acessos Hoje</span>
+                                <span class="stat-value" id="statTodayAccess">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Armazenamento</span>
+                                <span class="stat-value" id="statStorage">2.3 MB</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h3><i class="fas fa-chart-line"></i> Logs de Atividades</h3>
+                            <p>Últimas ações no sistema</p>
+                        </div>
+                        <div class="logs-list" id="logsList">
+                            <div class="log-item">
+                                <i class="fas fa-sign-in-alt"></i>
+                                <div>
+                                    <strong>Login realizado</strong>
+                                    <span>Há 5 minutos</span>
+                                </div>
+                            </div>
+                            <div class="log-item">
+                                <i class="fas fa-cog"></i>
+                                <div>
+                                    <strong>Configurações alteradas</strong>
+                                    <span>Há 1 hora</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-secondary" onclick="exportarLogs()">
+                            <i class="fas fa-download"></i> Exportar Logs
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tab Backup -->
+                <div class="settings-panel" id="tab-backup">
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h3><i class="fas fa-database"></i> Backup de Dados</h3>
+                            <p>Faça backup dos seus dados do sistema</p>
+                        </div>
+                        <div class="backup-options">
+                            <div class="backup-option">
+                                <div class="option-info">
+                                    <i class="fas fa-download"></i>
+                                    <div>
+                                        <strong>Backup Manual</strong>
+                                        <p>Baixe uma cópia de todos os dados do sistema</p>
+                                    </div>
+                                </div>
+                                <button class="btn-primary" onclick="fazerBackup()">
+                                    <i class="fas fa-download"></i> Baixar Backup
+                                </button>
+                            </div>
+                            <div class="backup-option">
+                                <div class="option-info">
+                                    <i class="fas fa-clock"></i>
+                                    <div>
+                                        <strong>Backup Automático</strong>
+                                        <p>Agende backups automáticos</p>
+                                    </div>
+                                </div>
+                                <div class="backup-schedule">
+                                    <select id="backupSchedule">
+                                        <option value="off">Desativado</option>
+                                        <option value="daily">Diário</option>
+                                        <option value="weekly">Semanal</option>
+                                        <option value="monthly">Mensal</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h3><i class="fas fa-history"></i> Histórico de Backups</h3>
+                            <p>Backups realizados anteriormente</p>
+                        </div>
+                        <div class="backup-history" id="backupHistory">
+                            <div class="history-item">
+                                <i class="fas fa-file-archive"></i>
+                                <div>
+                                    <strong>backup_20250315_143022.zip</strong>
+                                    <span>15/03/2025 14:30 - 2.3 MB</span>
+                                </div>
+                                <button class="btn-secondary-small" onclick="restaurarBackup(this)">Restaurar</button>
+                            </div>
+                            <div class="history-item">
+                                <i class="fas fa-file-archive"></i>
+                                <div>
+                                    <strong>backup_20250314_090000.zip</strong>
+                                    <span>14/03/2025 09:00 - 2.1 MB</span>
+                                </div>
+                                <button class="btn-secondary-small" onclick="restaurarBackup(this)">Restaurar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <h3><i class="fas fa-trash-alt"></i> Limpeza de Dados</h3>
+                            <p>Remova dados antigos e libere espaço</p>
+                        </div>
+                        <div class="cleanup-options">
+                            <div class="cleanup-option">
+                                <div>
+                                    <strong>Limpar Logs Antigos</strong>
+                                    <p>Remover logs com mais de 30 dias</p>
+                                </div>
+                                <button class="btn-secondary" onclick="limparLogs()">Limpar</button>
+                            </div>
+                            <div class="cleanup-option">
+                                <div>
+                                    <strong>Limpar Cache</strong>
+                                    <p>Remover arquivos temporários e cache</p>
+                                </div>
+                                <button class="btn-secondary" onclick="limparCache()">Limpar</button>
+                            </div>
+                            <div class="cleanup-option warning">
+                                <div>
+                                    <strong>Limpar Todos os Dados</strong>
+                                    <p>⚠️ Esta ação é irreversível. Todos os dados serão removidos.</p>
+                                </div>
+                                <button class="btn-danger" onclick="limparTodosDados()">Limpar Tudo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
-    <!-- Toast Notifications -->
     <div id="toast" class="toast"></div>
 
-    <script src="/assets/js/configuracoes.js"></script>
     <script src="/assets/js/theme.js"></script>
+    <script src="/assets/js/header.js"></script>
+    <script src="/assets/js/configuracoes.js"></script>
 </body>
 </html>
