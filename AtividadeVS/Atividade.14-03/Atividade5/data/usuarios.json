@@ -38,5 +38,23 @@
         "departamento": "TI",
         "data_criacao": "2026-03-28 11:59:24.475583",
         "ultimo_acesso": "2026-03-28 11:59:54.943477"
+    },
+    "GabyMilhor": {
+        "senha": "d87314fc84b4ab3b0688fdc3ac8792c7d8da45430dee0b152980b1243a9e6033",
+        "nome": "Gaby",
+        "email": "gabyMilhor@gmail.com",
+        "telefone": "(16) 9867-58188",
+        "departamento": "Marketing",
+        "data_criacao": "2026-03-28 12:10:45.940677",
+        "ultimo_acesso": "2026-03-28 12:10:58.608864"
+    },
+    "Gilson": {
+        "senha": "b7158b64a98516b31d0c23609f69265a868c594dda5b3c8da9e13159e209c9b6",
+        "nome": "Gilson",
+        "email": "Gilson.Rossi@gmail.com",
+        "telefone": "(16) 9961-68526",
+        "departamento": "Vendas",
+        "data_criacao": "2026-03-28 12:13:47.969274",
+        "ultimo_acesso": "2026-03-28 12:14:04.961655"
     }
 }

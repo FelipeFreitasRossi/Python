@@ -4,7 +4,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log("✅ Página de cadastro carregada");
 
-    // Elementos principais
     const form = document.getElementById('cadastroForm');
     const steps = document.querySelectorAll('.form-step');
     const progressSteps = document.querySelectorAll('.progress-step');
@@ -14,10 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentStep = 1;
     const totalSteps = 3;
 
-    // Inicializa exibindo o primeiro passo
     showStep(currentStep);
 
-    // Event listeners para botões "Próximo"
     nextButtons.forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
@@ -28,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Event listeners para botões "Anterior"
     prevButtons.forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
@@ -37,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Event listener para o submit do formulário (último passo)
     if (form) {
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -46,7 +41,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Função para mostrar um passo específico e atualizar a barra de progresso
     function showStep(step) {
         steps.forEach(s => s.classList.remove('active'));
         const currentStepEl = document.getElementById(`step${step}`);
@@ -63,7 +57,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Validação de cada passo
     function validateStep(step) {
         switch(step) {
             case 1: return validateStep1();
@@ -218,16 +211,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (resultado.success) {
                 localStorage.removeItem('cadastroData');
-                alert('✅ Cadastro realizado com sucesso! Redirecionando para o login...');
+                showSuccess('Cadastro realizado com sucesso! Redirecionando para o login...', 'Conta criada!', true, 2500);
                 setTimeout(() => {
                     window.location.href = '/?cadastro=sucesso';
-                }, 2000);
+                }, 2500);
             } else {
-                alert('❌ Erro: ' + resultado.message);
+                showError(resultado.message, 'Erro no cadastro', true, 4000);
             }
         } catch (error) {
             console.error('❌ Erro na requisição:', error);
-            alert('❌ Erro ao conectar com o servidor. Verifique se o backend está rodando.');
+            showError('Erro ao conectar com o servidor. Verifique se o backend está rodando.', 'Erro de conexão', true, 4000);
         } finally {
             btn.innerHTML = originalText;
             btn.disabled = false;

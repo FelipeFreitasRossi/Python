@@ -8,23 +8,33 @@ class ModalPopup {
     }
 
     createModalElement() {
-        // Criar elemento do modal se não existir
-        if (!document.querySelector('.modal-overlay')) {
-            const modalHTML = `
-                <div class="modal-overlay" id="modalOverlay">
-                    <div class="modal-popup">
-                        <div class="modal-icon" id="modalIcon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <h3 id="modalTitle">Sucesso!</h3>
-                        <p id="modalMessage">Operação realizada com sucesso.</p>
-                        <button class="modal-btn" id="modalBtn">Ok</button>
-                        <div class="modal-timer" id="modalTimer"></div>
-                    </div>
-                </div>
-            `;
-            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        // Verificar se já existe
+        if (document.querySelector('.modal-overlay')) {
+            this.overlay = document.querySelector('.modal-overlay');
+            this.modalBtn = document.getElementById('modalBtn');
+            this.modalIcon = document.getElementById('modalIcon');
+            this.modalTitle = document.getElementById('modalTitle');
+            this.modalMessage = document.getElementById('modalMessage');
+            this.modalTimer = document.getElementById('modalTimer');
+            this.bindEvents();
+            return;
         }
+        
+        // Criar elemento do modal
+        const modalHTML = `
+            <div class="modal-overlay" id="modalOverlay">
+                <div class="modal-popup">
+                    <div class="modal-icon" id="modalIcon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 id="modalTitle">Sucesso!</h3>
+                    <p id="modalMessage">Operação realizada com sucesso.</p>
+                    <button class="modal-btn" id="modalBtn">Ok</button>
+                    <div class="modal-timer" id="modalTimer"></div>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
         
         this.overlay = document.getElementById('modalOverlay');
         this.modalBtn = document.getElementById('modalBtn');
@@ -33,6 +43,10 @@ class ModalPopup {
         this.modalMessage = document.getElementById('modalMessage');
         this.modalTimer = document.getElementById('modalTimer');
         
+        this.bindEvents();
+    }
+    
+    bindEvents() {
         // Fechar ao clicar no botão
         if (this.modalBtn) {
             this.modalBtn.addEventListener('click', () => this.close());
@@ -89,7 +103,7 @@ class ModalPopup {
         // Mostrar modal
         this.overlay.classList.add('active');
         
-        // Limpar intervalo anterior se existir
+        // Limpar intervalo anterior
         if (this.currentInterval) {
             clearInterval(this.currentInterval);
             this.currentInterval = null;
@@ -164,6 +178,16 @@ function showError(message, title = 'Erro!', autoClose = true, duration = 3000) 
 function showInfo(message, title = 'Informação', autoClose = true, duration = 3000) {
     modal.show({
         type: 'info',
+        title: title,
+        message: message,
+        autoClose: autoClose,
+        duration: duration
+    });
+}
+
+function showWarning(message, title = 'Atenção!', autoClose = true, duration = 3000) {
+    modal.show({
+        type: 'warning',
         title: title,
         message: message,
         autoClose: autoClose,

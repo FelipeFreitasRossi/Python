@@ -13,9 +13,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const cadastroSucesso = urlParams.get('cadastro');
     
     if (cadastroSucesso === 'sucesso') {
-        alert('✅ Cadastro realizado com sucesso! Faça seu login.');
+        showSuccess('Cadastro realizado com sucesso! Faça seu login.', 'Bem-vindo!', true, 3000);
         
-        // Remover o parâmetro da URL para não mostrar novamente ao recarregar
+        // Remover o parâmetro da URL
         const newUrl = window.location.pathname;
         window.history.replaceState({}, document.title, newUrl);
     }
@@ -37,7 +37,7 @@ async function handleLogin(e) {
     const senha = document.getElementById('senha')?.value;
     
     if (!usuario || !senha) {
-        alert('❌ Por favor, preencha todos os campos!');
+        showError('Por favor, preencha todos os campos!', 'Campos obrigatórios', true, 2500);
         return;
     }
     
@@ -62,7 +62,6 @@ async function handleLogin(e) {
         console.log("Resposta do servidor:", resultado);
         
         if (resultado.success) {
-            // Salvar usuário lembrado
             const lembrar = document.getElementById('lembrar').checked;
             if (lembrar) {
                 localStorage.setItem('rememberedUser', usuario);
@@ -70,19 +69,16 @@ async function handleLogin(e) {
                 localStorage.removeItem('rememberedUser');
             }
             
-            // Salvar nome do usuário na sessão do navegador
             sessionStorage.setItem('username', usuario);
+            showSuccess('Login realizado com sucesso! Redirecionando...', 'Bem-vindo!', true, 2000);
             
-            alert('✅ Login realizado com sucesso! Redirecionando...');
-            
-            // Redirecionar após 1.5 segundos
             setTimeout(() => {
                 window.location.href = '/dashboard';
-            }, 1500);
+            }, 2000);
         } else {
-            alert('❌ ' + resultado.message);
+            showError(resultado.message, 'Falha no login', true, 3000);
             
-            // Efeito de erro no campo
+            // Efeito de erro nos campos
             const inputUsuario = document.getElementById('usuario');
             const inputSenha = document.getElementById('senha');
             inputUsuario.style.borderColor = '#ef4444';
@@ -94,7 +90,7 @@ async function handleLogin(e) {
         }
     } catch (error) {
         console.error('Erro na requisição:', error);
-        alert('❌ Erro ao conectar com o servidor. Verifique se o backend está rodando.');
+        showError('Erro ao conectar com o servidor. Verifique se o backend está rodando.', 'Erro de conexão', true, 4000);
     } finally {
         loginBtn.innerHTML = textoOriginal;
         loginBtn.disabled = false;

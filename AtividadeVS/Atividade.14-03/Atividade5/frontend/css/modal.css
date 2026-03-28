@@ -1,0 +1,109 @@
+/* ===== MODAL POP-UP ===== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-popup {
+    background: var(--card-bg);
+    border-radius: 28px;
+    width: 90%;
+    max-width: 420px;
+    padding: 2rem;
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border-color);
+}
+
+.modal-overlay.active .modal-popup {
+    transform: scale(1);
+}
+
+.modal-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+}
+
+.modal-icon.success {
+    background: linear-gradient(135deg, #10b98120, #10b98110);
+    color: #10b981;
+    border: 2px solid #10b981;
+}
+
+.modal-icon.error {
+    background: linear-gradient(135deg, #ef444420, #ef444410);
+    color: #ef4444;
+    border: 2px solid #ef4444;
+}
+
+.modal-icon.info {
+    background: linear-gradient(135deg, #667eea20, #764ba210);
+    color: #667eea;
+    border: 2px solid #667eea;
+}
+
+.modal-popup h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.modal-popup p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.modal-popup .modal-btn {
+    padding: 0.8rem 2rem;
+    background: var(--gradient);
+    color: white;
+    border: none;
+    border-radius: 40px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.modal-popup .modal-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.modal-timer {
+    margin-top: 1rem;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+.modal-timer span {
+    font-weight: 600;
+    color: var(--primary);
+}
